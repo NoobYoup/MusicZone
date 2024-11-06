@@ -189,35 +189,33 @@ const app = {
 
         // Khi nhạc được play
         playBtn.onclick = function () {
-            if (_this.isPlaying) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-        };
-
-        audio.onplay = function () {
             _this.isPlaying = true;
             playbar.classList.add('playing');
             audio.play();
             cdAnimate.play();
         };
 
+        // audio.onplay = function () {
+        //     _this.isPlaying = true;
+        //     playbar.classList.add('playing');
+        //     audio.play();
+        //     cdAnimate.play();
+        // };
+
         // Khi nhạc bị pause
         pauseBtn.onclick = function () {
-            if (_this.isPlaying) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-        };
-
-        audio.onpause = function () {
             this.isPlaying = false;
             playbar.classList.remove('playing');
             audio.pause();
             cdAnimate.pause();
         };
+
+        // audio.onpause = function () {
+        //     this.isPlaying = false;
+        //     playbar.classList.remove('playing');
+        //     audio.pause();
+        //     cdAnimate.pause();
+        // };
 
         // Cập nhật button khi nhạc kết thúc
         audio.onended = function () {
@@ -265,13 +263,19 @@ const app = {
         // Khi next nhạc
         nextBtn.onclick = function () {
             _this.nextSong();
+            _this.isPlaying = true;
+            playbar.classList.add('playing');
             audio.play();
+            cdAnimate.play();
         };
 
         // Khi prev nhạc
         prevBtn.onclick = function () {
             _this.prevSong();
+            _this.isPlaying = true;
+            playbar.classList.add('playing');
             audio.play();
+            cdAnimate.play();
         };
     },
 
