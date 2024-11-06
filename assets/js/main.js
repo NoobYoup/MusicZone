@@ -22,7 +22,7 @@ const loop = $('#loop');
 const mute = $('#mute');
 const unmute = $('#unmute');
 
-var app = {
+const app = {
     randomPlayList: [],
     otherPlayList: [],
     currentSong: null,
@@ -38,99 +38,99 @@ var app = {
             id: 1,
             name: 'Đánh Đổi',
             artists: ['Obito', 'MCK', 'Shiki'],
-            'audio-source': './assets/mp3/DanhDoi.mp3',
-            'cover-image': './assets/images/danhdoi.png',
+            audio: './assets/mp3/DanhDoi.mp3',
+            image: './assets/images/danhdoi.png',
         },
         {
             id: 2,
             name: 'Anh Đã Ổn Hơn',
             artists: ['MCK'],
-            'audio-source': './assets/mp3/AnhDaOnHon.mp3',
-            'cover-image': './assets/images/anhdaonhon.png',
+            audio: './assets/mp3/AnhDaOnHon.mp3',
+            image: './assets/images/anhdaonhon.png',
         },
         {
             id: 3,
             name: 'Buồn hay Vui',
             artists: ['VSOUL', 'MCK', 'Obito', 'Ronboogz'],
-            'audio-source': './assets/mp3/BuonHayVui.mp3',
-            'cover-image': './assets/images/buonhayvui.png',
+            audio: './assets/mp3/BuonHayVui.mp3',
+            image: './assets/images/buonhayvui.png',
         },
         {
             id: 4,
             name: 'Thờ Er',
             artists: ['MCK'],
-            'audio-source': './assets/mp3/ThoEr.mp3',
-            'cover-image': './assets/images/thoer.png',
+            audio: './assets/mp3/ThoEr.mp3',
+            image: './assets/images/thoer.png',
         },
         {
             id: 5,
             name: 'Show Me Love',
             artists: ['MCK'],
-            'audio-source': './assets/mp3/ShowMeLove.mp3',
-            'cover-image': './assets/images/showmelove.png',
+            audio: './assets/mp3/ShowMeLove.mp3',
+            image: './assets/images/showmelove.png',
         },
         {
             id: 6,
             name: 'Chương 2 Của Tương Lai',
             artists: ['Wean', 'MCK'],
-            'audio-source': './assets/mp3/ChuongHaiCuaTuongLai.mp3',
-            'cover-image': './assets/images/chuong2cuatuonglai.png',
+            audio: './assets/mp3/ChuongHaiCuaTuongLai.mp3',
+            image: './assets/images/chuong2cuatuonglai.png',
         },
         {
             id: 7,
             name: 'Anhs Ems',
             artists: ['QNT', 'RZ Mas', 'Wxrdie'],
-            'audio-source': './assets/mp3/AnhsEms.mp3',
-            'cover-image': './assets/images/anhsems.jpg',
+            audio: './assets/mp3/AnhsEms.mp3',
+            image: './assets/images/anhsems.jpg',
         },
         {
             id: 8,
             name: 'Xuất Phát Điểm',
             artists: ['Obito', 'Shiki'],
-            'audio-source': './assets/mp3/XuatPhatDiem.mp3',
-            'cover-image': './assets/images/xuatphatdiem.jpg',
+            audio: './assets/mp3/XuatPhatDiem.mp3',
+            image: './assets/images/xuatphatdiem.jpg',
         },
         {
             id: 9,
             name: 'Tựa Đêm Nay',
             artists: ['The Cassette'],
-            'audio-source': './assets/mp3/TuaDemNay.mp3',
-            'cover-image': './assets/images/tuademnay.jpg',
+            audio: './assets/mp3/TuaDemNay.mp3',
+            image: './assets/images/tuademnay.jpg',
         },
         {
             id: 10,
             name: 'Xích Thêm Chút',
             artists: ['RPT Groovie', 'tlinh', 'MCK'],
-            'audio-source': './assets/mp3/XTC.mp3',
-            'cover-image': './assets/images/xtc.jpg',
+            audio: './assets/mp3/XTC.mp3',
+            image: './assets/images/xtc.jpg',
         },
         {
             id: 11,
             name: 'Xanh',
             artists: ['Ngọt'],
-            'audio-source': './assets/mp3/Xanh.mp3',
-            'cover-image': './assets/images/xanh.jpg',
+            audio: './assets/mp3/Xanh.mp3',
+            image: './assets/images/xanh.jpg',
         },
         {
             id: 12,
             name: 'Dalat',
             artists: ['Thoại 004'],
-            'audio-source': './assets/mp3/Dalat.mp3',
-            'cover-image': './assets/images/dalat.jfif',
+            audio: './assets/mp3/Dalat.mp3',
+            image: './assets/images/dalat.jfif',
         },
         {
             id: 13,
             name: 'Một Hôm Trên Những Mái Nhà',
             artists: ['Thoại 004'],
-            'audio-source': './assets/mp3/MotHomTrenNhungMaiNha.mp3',
-            'cover-image': './assets/images/mothomtrennhungmainha.jfif',
+            audio: './assets/mp3/MotHomTrenNhungMaiNha.mp3',
+            image: './assets/images/mothomtrennhungmainha.jfif',
         },
         {
             id: 14,
             name: 'Thiên Hà Trước Hiên Nhà',
             artists: ['Datmaniac'],
-            'audio-source': './assets/mp3/ThienHaTruocHienNha.mp3',
-            'cover-image': './assets/images/thienhatruochiennha.jfif',
+            audio: './assets/mp3/ThienHaTruocHienNha.mp3',
+            image: './assets/images/thienhatruochiennha.jfif',
         },
     ],
 
@@ -165,7 +165,7 @@ var app = {
         }
 
         this.updateCurrentSong();
-        audio.src = song['audio-source'];
+        audio.src = song['audio'];
         audio.play();
     },
     loadSongs: function () {
@@ -185,7 +185,7 @@ var app = {
         this.currentPlayList = 'random';
         this.currentIndex = 0;
         this.updateCurrentSong();
-        audio.src = this.randomPlayList[0]['audio-source'];
+        audio.src = this.randomPlayList[0]['audio'];
 
         volume.style.background = `linear-gradient(to right, var(--color-theme) ${1000}%, #4d4d4d ${100}%)`;
 
@@ -210,7 +210,7 @@ var app = {
         element.innerHTML += `
         <div class="random-song__wrap playable">
             <div class="random-song__info">
-                <div style="background-image: url(${song['cover-image']});" class="random-song__avt"></div>
+                <div style="background-image: url(${song['image']});" class="random-song__avt"></div>
                 <span class="random-song__name">${song.name}</span>
             </div>
             <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
@@ -232,7 +232,7 @@ var app = {
 
         element.innerHTML += `
         <div class="other-song__wrap playable">
-            <div style="background-image: url(${song['cover-image']});" class="other-song__avt"></div>
+            <div style="background-image: url(${song['image']});" class="other-song__avt"></div>
             <p class="other-song__name">${song.name}</p>
             <p class="other-song__artists">${song.artists.join(', ')}</p>
             <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
@@ -258,10 +258,10 @@ var app = {
         currentSongBlock.querySelector('.current-song__artists').innerText = this.currentSong.artists.join(', ');
         currentSongBlock.querySelector(
             '.current-song__avt',
-        ).style.backgroundImage = `url(${this.currentSong['cover-image']})`;
+        ).style.backgroundImage = `url(${this.currentSong['image']})`;
         $('.play-song__name').innerText = this.currentSong.name;
         $('.play-song__artists').innerText = this.currentSong.artists.join(', ');
-        $('.play-song__avt').style.backgroundImage = `url(${this.currentSong['cover-image']})`;
+        $('.play-song__avt').style.backgroundImage = `url(${this.currentSong['image']})`;
     },
 
     handleEvents: function () {
@@ -441,3 +441,6 @@ var app = {
 };
 
 app.start();
+
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
