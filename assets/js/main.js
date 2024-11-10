@@ -256,9 +256,7 @@ const app = {
     updateCurrentSong: function () {
         currentSongBlock.querySelector('.current-song__name').innerText = this.currentSong.name;
         currentSongBlock.querySelector('.current-song__artists').innerText = this.currentSong.artists.join(', ');
-        currentSongBlock.querySelector(
-            '.current-song__avt',
-        ).style.backgroundImage = `url(${this.currentSong['image']})`;
+        currentSongBlock.querySelector('.current-song__avt').style.backgroundImage = `url(${this.currentSong['image']})`;
         $('.play-song__name').innerText = this.currentSong.name;
         $('.play-song__artists').innerText = this.currentSong.artists.join(', ');
         $('.play-song__avt').style.backgroundImage = `url(${this.currentSong['image']})`;
@@ -304,8 +302,7 @@ const app = {
 
             let currentDuration, durationLeft;
 
-            currentDuration =
-                secondCurrent < 10 ? `${minuteCurrent}:0${secondCurrent}` : `${minuteCurrent}:${secondCurrent}`;
+            currentDuration = secondCurrent < 10 ? `${minuteCurrent}:0${secondCurrent}` : `${minuteCurrent}:${secondCurrent}`;
             durationLeft = secondLeft < 10 ? `-${minuteLeft}:0${secondLeft}` : `-${minuteLeft}:${secondLeft}`;
 
             currentTime.innerText = currentDuration;
@@ -418,10 +415,7 @@ const app = {
             } else if (this.currentIndex < 0) {
                 this.currentIndex = this.randomPlayList.length - 1;
             }
-            this.playSong(
-                this.randomPlayList[this.currentIndex],
-                randomList.querySelectorAll('.l-6')[this.currentIndex],
-            );
+            this.playSong(this.randomPlayList[this.currentIndex], randomList.querySelectorAll('.l-6')[this.currentIndex]);
         } else {
             if (this.currentIndex >= this.otherPlayList.length) {
                 this.currentIndex = 0;

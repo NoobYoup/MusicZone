@@ -6,18 +6,34 @@ const artist = $('.play-song__artists');
 const cd = $('.play-song__avt');
 const audio = $('#audio__elem');
 
+const headingCurrentSong = $('.current-song__name');
+const avatarCurrentSong = $('.current-song__avt');
+const artistCurrentSong = $('.current-song__artists');
+
 const playBtn = $('#play--main');
 const pauseBtn = $('#pause--main');
 const nextBtn = $('.btn-next');
 const prevBtn = $('.btn-prev');
+const randomBtn = $('#shuffle');
+const repeatBtn = $('#loop');
 const playbar = $('.playbar__nav');
 const progress = $('.input__progress');
 const currentTime = $('.time--current');
 const duration = $('.time--total');
+const volume = $('.volumne__amount');
+const volumeProgress = $('.volumne__amount');
+
+const randomList = $('.random__list');
+const currentSong = $('.current-song');
 
 const app = {
+    randomPlayList: [],
+    otherPlayList: [],
     currentIndex: 0,
     isPlaying: false,
+    isRandom: false,
+    isRepeat: false,
+    volumeAmount: 1,
 
     songs: [
         {
@@ -143,29 +159,24 @@ const app = {
     ],
 
     render: function () {
-        const htmls = this.songs.map((song) => {
+        const htmls = this.songs.map((song, index) => {
             return `
-            <div class="col-lg-4">
-                <div class="random-song__wrap">
-                    <div class="random-song__info">
-                        <div
-                        style="background-image: url('${song.image}')"
-                        class="random-song__avt"
-                        ></div>
-                        <span class="random-song__name">${song.name}</span>
+                <div class="col-lg-4">
+                    <div class="random-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
+                        <div class="random-song__info">
+                            <div
+                                style="background-image: url('${song.image}')"
+                                class="random-song__avt"
+                            ></div>
+                            <span class="random-song__name">${song.name}</span>
+                        </div>
+                        <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"></i>
                     </div>
-                    <i
-                    class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"
-                    ></i>
-                    <i
-                        class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"
-                    ></i>
                 </div>
-            </div>
             `;
         });
-
-        $('.random__list').innerHTML = htmls.join('');
+        randomList.innerHTML = htmls.join('');
     },
 
     defineProperties: function () {
@@ -195,13 +206,6 @@ const app = {
             cdAnimate.play();
         };
 
-        // audio.onplay = function () {
-        //     _this.isPlaying = true;
-        //     playbar.classList.add('playing');
-        //     audio.play();
-        //     cdAnimate.play();
-        // };
-
         // Khi nhạc bị pause
         pauseBtn.onclick = function () {
             this.isPlaying = false;
@@ -209,13 +213,6 @@ const app = {
             audio.pause();
             cdAnimate.pause();
         };
-
-        // audio.onpause = function () {
-        //     this.isPlaying = false;
-        //     playbar.classList.remove('playing');
-        //     audio.pause();
-        //     cdAnimate.pause();
-        // };
 
         // Cập nhật button khi nhạc kết thúc
         audio.onended = function () {
@@ -262,28 +259,96 @@ const app = {
 
         // Khi next nhạc
         nextBtn.onclick = function () {
-            _this.nextSong();
+            if (_this.isRandom) {
+                _this.playRandomSong();
+            } else {
+                _this.nextSong();
+            }
             _this.isPlaying = true;
             playbar.classList.add('playing');
             audio.play();
             cdAnimate.play();
+            _this.render();
         };
 
         // Khi prev nhạc
         prevBtn.onclick = function () {
-            _this.prevSong();
+            if (_this.isRandom) {
+                _this.playRandomSong();
+            } else {
+                _this.prevSong();
+            }
             _this.isPlaying = true;
             playbar.classList.add('playing');
             audio.play();
             cdAnimate.play();
+            _this.render();
+        };
+
+        // Xử lý bật / tắt random song
+        randomBtn.onclick = function () {
+            _this.isRandom = !_this.isRandom;
+            randomBtn.classList.toggle('active', _this.isRandom);
+        };
+
+        // Xử lý lặp lại một song
+        repeatBtn.onclick = function () {
+            _this.isRepeat = !_this.isRepeat;
+            repeatBtn.classList.toggle('active', _this.isRepeat);
+        };
+
+        // Xử lý next song khi audio ended
+        audio.onended = function () {
+            if (_this.isRepeat) {
+                audio.play();
+            } else {
+                nextBtn.click();
+            }
+        };
+
+        // Lắng nghe hành vi click vào randomList
+        randomList.onclick = function (e) {
+            const songNode = e.target.closest('.random-song__wrap:not(.active)');
+
+            // Xử lý khi click vào song
+            if (songNode) {
+                _this.currentIndex = Number(songNode.dataset.index);
+                _this.loadCurrentSong();
+                _this.render();
+                playbar.classList.add('playing');
+                audio.play();
+                cdAnimate.play();
+            }
+        };
+
+        // Xử lý tăng / giảm volume
+        volumeProgress.onchange = function () {
+            audio.volume = volumeProgress.value / 100;
+
+            if (volumeProgress.value == 0) {
+                if (!$('.playbar__volumne').classList.contains('mute')) {
+                    $('.playbar__volumne').classList.add('mute');
+                }
+            } else {
+                _this.volumeAmount = volumeProgress.value / 100;
+                if ($('.playbar__volumne').classList.contains('mute')) {
+                    $('.playbar__volumne').classList.remove('mute');
+                }
+            }
         };
     },
 
     loadCurrentSong: function () {
+        // Playbar
         heading.textContent = this.currentSong.name;
         artist.textContent = this.currentSong.artists;
         cd.style.backgroundImage = `url('${this.currentSong.image}')`;
         audio.src = this.currentSong.audio;
+
+        // Sidebar
+        headingCurrentSong.textContent = this.currentSong.name;
+        artistCurrentSong.textContent = this.currentSong.artists;
+        avatarCurrentSong.style.backgroundImage = `url('${this.currentSong.image}')`;
     },
 
     nextSong: function () {
@@ -299,6 +364,16 @@ const app = {
         if (this.currentIndex < 0) {
             this.currentIndex = this.songs.length - 1;
         }
+        this.loadCurrentSong();
+    },
+
+    playRandomSong: function () {
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * this.songs.length);
+        } while (newIndex === this.currentIndex);
+
+        this.currentIndex = newIndex;
         this.loadCurrentSong();
     },
 

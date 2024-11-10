@@ -13,6 +13,7 @@
 .container-fluid {
     min-height: 1000px;
     margin-top: 86px;
+    overflow: auto;
 }
 
 .container {
@@ -28,7 +29,7 @@
 
 .scrollable {
     overflow: auto;
-    /* overflow-x: hidden; */
+    overflow-x: hidden;
     padding-bottom: 128px;
 }
 
@@ -36,7 +37,6 @@
 .play-list,
 .current-song {
     background-color: var(--color-dark);
-    min-height: 100vh;
     border-radius: 10px;
 }
 
@@ -61,6 +61,7 @@
     transition: all 0.2s ease;
     justify-content: space-between;
     margin: 6px 0;
+    padding: 0;
 }
 
 .random-song__wrap.playing .btn__play {
@@ -229,53 +230,7 @@
 /* End scrollbar */
 
 
-/* Current song */
-.current-song {
-    padding: 12px;
-    height: 100vh;
-    width: 100%;
-}
 
-.current-song__avt {
-    width: 100%;
-    aspect-ratio: 1/1;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-    margin: 0 auto;
-}
-
-.current-song__heading {
-    color: #fff;
-    font-size: 1.6rem;
-    margin: 8px 0;
-}
-
-.current-song__name {
-    color: #fff;
-    font-size: 3rem;
-    font-weight: 550;
-    margin: 6px 0 6px;
-}
-
-.current-song__artists {
-    font-size: 1.5rem;
-    color: #b2b2b2;
-    font-weight: 500;
-}
-
-.current-song__name,
-.current-song__artists {
-    overflow: hidden;
-    white-space: nowrap;
-    /* Don't forget this one */
-    text-overflow: ellipsis;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    ;
-}
-
-/* End current song */
 
 /* Playbar */
 .playbar {

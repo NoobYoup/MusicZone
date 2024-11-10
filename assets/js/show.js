@@ -60,3 +60,33 @@ function closeLoginModal() {
         loginContainer.style.display = 'none'; // Ẩn modal
     }, 300); // Thời gian trễ bằng với thời gian hiệu ứng
 }
+
+// Xử lý khi click menu sidebar left
+const menuItems = document.querySelectorAll('.menu-heading');
+const playlist = document.querySelector('.drop_down-playlist');
+const playlistItem = document.querySelector('.playlist-item');
+const arrow = document.querySelector('.arrow-right');
+
+menuItems.forEach((item) => {
+    // Thêm class active khi click
+    item.addEventListener('click', function () {
+        menuItems.forEach((item) => item.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+let isOpen = false; // Show playlist
+
+playlist.addEventListener('click', () => {
+    isOpen = !isOpen;
+
+    if (isOpen) {
+        playlistItem.style.display = 'block';
+        arrow.classList.remove('ti-angle-right');
+        arrow.classList.add('ti-angle-down');
+    } else {
+        playlistItem.style.display = 'none';
+        arrow.classList.remove('ti-angle-down');
+        arrow.classList.add('ti-angle-right');
+    }
+});

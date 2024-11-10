@@ -1,16 +1,17 @@
+/* Sidebar left */
 .sidebar {
-    width: 250px;
-    /* height: 500px; */
-    position: fixed;
-    background-color: var(--color-dark-gray);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: var(--color-dark);
+    padding: 12px;
     border-radius: 10px;
-    margin-top: -48px;
+    max-height: 570px;
     z-index: 3;
-    /* overflow: auto; */
+    overflow: auto;
+}
+
+.sidebar,
+.play-list,
+.current-song {
+    overflow: hidden;
 }
 
 .sidebar .logo {
@@ -32,7 +33,7 @@
 .sidebar .menu a {
     display: flex;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px;
     color: #fff;
     text-decoration: none;
     font-size: 16px;
@@ -49,9 +50,9 @@
 }
 
 .sidebar .menu .playlist {
-    margin-top: 20px;
-    height: 150px;
-    overflow: auto;
+    /* height: 150px;
+    overflow: auto; */
+    cursor: pointer;
 }
 
 .sidebar .menu .playlist::-webkit-scrollbar {
@@ -72,6 +73,10 @@
     background-color: #555;
 }
 
+.sidebar .menu .playlist-item {
+    display: none;
+}
+
 .sidebar .menu .playlist a {
     margin-left: 20px;
 }
@@ -80,7 +85,7 @@
 .sidebar .menu .playlist .drop_down-playlist {
     display: flex;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px;
     color: #fff;
     text-decoration: none;
     font-size: 16px;
@@ -102,7 +107,7 @@
 .sidebar .logout {
     display: flex;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px;
     color: #fff;
     text-decoration: none;
     font-size: 16px;
@@ -111,3 +116,53 @@
 .sidebar .logout i {
     margin-right: 10px;
 }
+
+
+
+/* Current song */
+.current-song {
+    padding: 12px;
+    /* max-height: 570px; */
+    width: 250px;
+}
+
+.current-song__avt {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.current-song__heading {
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 8px 0;
+}
+
+.current-song__name {
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 550;
+    margin: 6px 0 6px;
+}
+
+.current-song__artists {
+    font-size: 1.5rem;
+    color: #b2b2b2;
+    font-weight: 500;
+}
+
+.current-song__name,
+.current-song__artists {
+    overflow: hidden;
+    white-space: nowrap;
+    /* Don't forget this one */
+    text-overflow: ellipsis;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    ;
+}
+
+/* End current song */
