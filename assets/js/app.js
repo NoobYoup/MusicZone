@@ -1,3 +1,5 @@
+const songsAPI = 'https://music-zone-server-zeta.vercel.app/?vercelToolbarCode=KqfMULRx4ccQlQp';
+
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
@@ -24,6 +26,7 @@ const volume = $('.volumne__amount');
 const volumeProgress = $('.volumne__amount');
 
 const randomList = $('.random__list');
+const otherList = $('.other__list');
 const currentSong = $('.current-song');
 
 const app = {
@@ -158,25 +161,23 @@ const app = {
         },
     ],
 
+    getSongs: async function () {
+        try {
+            const response = await fetch(songsAPI);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json();
+            this.songs = data; // Assuming `data` is an array of song objects
+            this.start();
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    },
+
     render: function () {
-        const htmls = this.songs.map((song, index) => {
-            return `
-                <div class="col-lg-4">
-                    <div class="random-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
-                        <div class="random-song__info">
-                            <div
-                                style="background-image: url('${song.image}')"
-                                class="random-song__avt"
-                            ></div>
-                            <span class="random-song__name">${song.name}</span>
-                        </div>
-                        <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"></i>
-                    </div>
-                </div>
-            `;
-        });
-        randomList.innerHTML = htmls.join('');
+        this.createRandomSong();
+        this.createOtherSong();
     },
 
     defineProperties: function () {
@@ -315,6 +316,31 @@ const app = {
                 _this.currentIndex = Number(songNode.dataset.index);
                 _this.loadCurrentSong();
                 _this.render();
+                // var songItem = $$('.random-song__wrap')[_this.currentIndex];
+
+                // if (!songItem.classList.contains('playing')) {
+                //     songItem.classList.toggle('playing');
+                // }
+                playbar.classList.add('playing');
+                audio.play();
+                cdAnimate.play();
+            }
+        };
+
+        // Lắng nghe hành vi click vào otherList
+        otherList.onclick = function (e) {
+            const songNode = e.target.closest('.other-song__wrap:not(.active)');
+
+            // Xử lý khi click vào song
+            if (songNode) {
+                _this.currentIndex = Number(songNode.dataset.index);
+                _this.loadCurrentSong();
+                _this.render();
+                // var songItem = $$('.other-song__wrap')[_this.currentIndex];
+
+                // if (!songItem.classList.contains('playing')) {
+                //     songItem.classList.toggle('playing');
+                // }
                 playbar.classList.add('playing');
                 audio.play();
                 cdAnimate.play();
@@ -375,6 +401,73 @@ const app = {
 
         this.currentIndex = newIndex;
         this.loadCurrentSong();
+    },
+
+    createRandomSong: function () {
+        // // Hàm trộn ngẫu nhiên
+        // function shuffle(array) {
+        //     for (let i = array.length - 1; i > 0; i--) {
+        //         const j = Math.floor(Math.random() * (i + 1));
+        //         // [array[i], array[j]] = [array[j], array[i]]; // Hoán đổi
+        //     }
+        // }
+
+        // // Tạo bản sao của danh sách bài hát để trộn
+        // const songsCopy = [...this.songs];
+
+        // // Trộn danh sách bài hát
+        // shuffle(songsCopy);
+
+        // // Chọn số lượng bài nhạc ngẫu nhiên
+        // const randomSongs = songsCopy.slice(0, 9);
+
+        // // Cập nhật mảng randomPlayList
+        // this.randomPlayList = randomSongs;
+
+        const htmls = this.songs.map((song, index) => {
+            return `
+                <div class="col-lg-4">
+                    <div class="random-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
+                        <div class="random-song__info">
+                            <div
+                                style="background-image: url('${song.image}')"
+                                class="random-song__avt"
+                            ></div>
+                            <span class="random-song__name">${song.name}</span>
+                        </div>
+                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
+                    </div>
+                </div>
+            `;
+        });
+        randomList.innerHTML = htmls.join('');
+    },
+
+    createOtherSong: function () {
+        // Tạo bản sao của danh sách bài hát gốc
+        const songsCopy = [...this.songs];
+
+        // Lọc các bài hát đã có trong randomPlayList
+        const otherSongs = songsCopy.filter((song) => !this.randomPlayList.includes(song));
+
+        const htmls = otherSongs.map((song, index) => {
+            return `
+                <div class="col-lg-3">
+                    <div class="other-song__wrap  ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
+                        <div
+                            style="background-image: url('${song.image}')"
+                            class="other-song__avt"
+                        ></div>
+                        <p class="other-song__name">${song.name}</p>
+                        <p class="other-song__artists">${song.artists}</p>
+                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
+                    </div>
+                </div>
+            `;
+        });
+        otherList.innerHTML = htmls.join('');
     },
 
     start: function () {
