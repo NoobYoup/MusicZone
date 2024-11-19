@@ -124,10 +124,12 @@
 
 
 /* Login Modal */
-.login-container {
+.login-container,
+.signup-container,
+.verify-container {
     position: fixed;
     left: 50%;
-    transform: translateX(-50%) scale(0);
+    transform: translateX(-50%) scale(1);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -140,18 +142,27 @@
     z-index: 5;
 }
 
-.login-container.show {
+.verify-container {
+    display: flex;
+}
+
+.login-container.show,
+.signup-container.show {
     transform: translateX(-50%) scale(1);
     opacity: 1;
 }
 
-.login-container #heading {
+.login-container #heading,
+.signup-container #heading,
+.verify-container #heading {
     text-align: center;
-    margin: 2em;
+    margin-top: 2em;
     color: #fff;
 }
 
-.login-container .field {
+.login-container .field,
+.signup-container .field,
+.verify-container .field {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,13 +176,16 @@
     box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
 
-.login-container .input-icon {
+.login-container .input-icon,
+.signup-container .input-icon {
     height: 1.3em;
     width: 1.3em;
     fill: white;
 }
 
-.login-container .input-field {
+.login-container .input-field,
+.signup-container .input-field,
+.verify-container .input-field {
     font-size: 1.6rem;
     background: none;
     border: none;
@@ -180,7 +194,9 @@
     color: #d3d3d3;
 }
 
-.login-container .btn {
+.login-container .btn,
+.signup-container .btn,
+.verify-container .btn {
     padding: 0;
     display: flex;
     justify-content: center;
@@ -188,7 +204,8 @@
     margin-top: 2.5em;
 }
 
-.login-container .button-login {
+.login-container .button-login,
+.signup-container .button-backto-login {
     font-size: 1.6rem;
     width: 100%;
     padding: 1rem;
@@ -201,12 +218,19 @@
     color: white;
 }
 
-.login-container .button-login:hover {
+.signup-container .button-backto-login {
+    margin-left: 0.5em;
+}
+
+.login-container .button-login:hover,
+.signup-container .button-backto-login:hover {
     background-color: black;
     color: white;
 }
 
-.login-container .button-sign-up {
+.login-container .button-sign-up,
+.signup-container .button-sign-up,
+.signup-container .button-create {
     font-size: 1.6rem;
     width: 100%;
     padding: 1rem;
@@ -218,7 +242,9 @@
     color: white;
 }
 
-.login-container .button-sign-up:hover {
+.login-container .button-sign-up:hover,
+.signup-container .button-sign-up:hover,
+.signup-container .button-create:hover {
     background-color: black;
     color: white;
 }

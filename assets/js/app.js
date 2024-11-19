@@ -1,4 +1,4 @@
-const songsAPI = 'https://music-zone-server-zeta.vercel.app/?vercelToolbarCode=KqfMULRx4ccQlQp';
+const songAPI = 'https://server-musiczone.vercel.app/api/v1/songs';
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -30,6 +30,7 @@ const otherList = $('.other__list');
 const currentSong = $('.current-song');
 
 const app = {
+    // songs: [],
     randomPlayList: [],
     otherPlayList: [],
     currentIndex: 0,
@@ -38,140 +39,152 @@ const app = {
     isRepeat: false,
     volumeAmount: 1,
 
-    songs: [
-        {
-            name: 'Sau Chia Tay Còn Lại Gì',
-            artists: ['Youp'],
-            audio: './assets/mp3/SauChiaTayConLaiGi.mp3',
-            image: './assets/images/sauchiatayconlaigi.jpeg',
-        },
-        {
-            name: 'Sau Chia Tay Còn Lại Gì [Piano Version]',
-            artists: ['Youp'],
-            audio: './assets/mp3/SauChiaTayConLaiGiPiano.mp3',
-            image: './assets/images/sauchiatayconlaigipiano.png',
-        },
-        {
-            name: 'Em Có Nhớ',
-            artists: ['Trung'],
-            audio: './assets/mp3/EmCoNho.mp3',
-            image: './assets/images/emconho.jpg',
-        },
-        {
-            name: 'Ngày Hôm Đó & Anh Không Xấu Xa',
-            artists: ['Trung'],
-            audio: './assets/mp3/NgayHomDoAnhKhongXauXa.mp3',
-            image: './assets/images/ngayhomdoanhkhongxauxa.jpg',
-        },
-        {
-            name: 'Anh Không Xấu Xa',
-            artists: ['Trung'],
-            audio: './assets/mp3/AnhKhongXauXa.mp3',
-            image: './assets/images/anhkhongxauxa.jpg',
-        },
-        {
-            name: 'Ngày Hôm Đó',
-            artists: ['Trung'],
-            audio: './assets/mp3/NgayHomDo.mp3',
-            image: './assets/images/ngayhomdo.jpg',
-        },
-        {
-            name: 'Đánh Đổi',
-            artists: ['Obito', 'MCK', 'Shiki'],
-            audio: './assets/mp3/DanhDoi.mp3',
-            image: './assets/images/danhdoi.png',
-        },
-        {
-            name: 'Anh Đã Ổn Hơn',
-            artists: ['MCK'],
-            audio: './assets/mp3/AnhDaOnHon.mp3',
-            image: './assets/images/anhdaonhon.png',
-        },
-        {
-            name: 'Buồn hay Vui',
-            artists: ['VSOUL', 'MCK', 'Obito', 'Ronboogz'],
-            audio: './assets/mp3/BuonHayVui.mp3',
-            image: './assets/images/buonhayvui.png',
-        },
-        {
-            name: 'Thờ Er',
-            artists: ['MCK'],
-            audio: './assets/mp3/ThoEr.mp3',
-            image: './assets/images/thoer.png',
-        },
-        {
-            name: 'Show Me Love',
-            artists: ['MCK'],
-            audio: './assets/mp3/ShowMeLove.mp3',
-            image: './assets/images/showmelove.png',
-        },
-        {
-            name: 'Chương 2 Của Tương Lai',
-            artists: ['Wean', 'MCK'],
-            audio: './assets/mp3/ChuongHaiCuaTuongLai.mp3',
-            image: './assets/images/chuong2cuatuonglai.png',
-        },
-        {
-            name: 'Anhs Ems',
-            artists: ['QNT', 'RZ Mas', 'Wxrdie'],
-            audio: './assets/mp3/AnhsEms.mp3',
-            image: './assets/images/anhsems.jpg',
-        },
-        {
-            name: 'Xuất Phát Điểm',
-            artists: ['Obito', 'Shiki'],
-            audio: './assets/mp3/XuatPhatDiem.mp3',
-            image: './assets/images/xuatphatdiem.jpg',
-        },
-        {
-            name: 'Tựa Đêm Nay',
-            artists: ['The Cassette'],
-            audio: './assets/mp3/TuaDemNay.mp3',
-            image: './assets/images/tuademnay.jpg',
-        },
-        {
-            name: 'Xích Thêm Chút',
-            artists: ['RPT Groovie', 'tlinh', 'MCK'],
-            audio: './assets/mp3/XTC.mp3',
-            image: './assets/images/xtc.jpg',
-        },
-        {
-            name: 'Xanh',
-            artists: ['Ngọt'],
-            audio: './assets/mp3/Xanh.mp3',
-            image: './assets/images/xanh.jpg',
-        },
-        {
-            name: 'Dalat',
-            artists: ['Thoại 004'],
-            audio: './assets/mp3/Dalat.mp3',
-            image: './assets/images/dalat.jfif',
-        },
-        {
-            name: 'Một Hôm Trên Những Mái Nhà',
-            artists: ['Thoại 004'],
-            audio: './assets/mp3/MotHomTrenNhungMaiNha.mp3',
-            image: './assets/images/mothomtrennhungmainha.jfif',
-        },
-        {
-            name: 'Thiên Hà Trước Hiên Nhà',
-            artists: ['Datmaniac'],
-            audio: './assets/mp3/ThienHaTruocHienNha.mp3',
-            image: './assets/images/thienhatruochiennha.jfif',
-        },
-    ],
+    // songs: [
+    //     {
+    //         name: 'Sau Chia Tay Còn Lại Gì',
+    //         artists: ['Youp'],
+    //         audio: './assets/mp3/SauChiaTayConLaiGi.mp3',
+    //         image: './assets/images/sauchiatayconlaigi.jpeg',
+    //     },
+    //     {
+    //         name: 'Sau Chia Tay Còn Lại Gì [Piano Version]',
+    //         artists: ['Youp'],
+    //         audio: './assets/mp3/SauChiaTayConLaiGiPiano.mp3',
+    //         image: './assets/images/sauchiatayconlaigipiano.png',
+    //     },
+    //     {
+    //         name: 'Em Có Nhớ',
+    //         artists: ['Trung'],
+    //         audio: './assets/mp3/EmCoNho.mp3',
+    //         image: './assets/images/emconho.jpg',
+    //     },
+    //     {
+    //         name: 'Ngày Hôm Đó & Anh Không Xấu Xa',
+    //         artists: ['Trung'],
+    //         audio: './assets/mp3/NgayHomDoAnhKhongXauXa.mp3',
+    //         image: './assets/images/ngayhomdoanhkhongxauxa.jpg',
+    //     },
+    //     {
+    //         name: 'Anh Không Xấu Xa',
+    //         artists: ['Trung'],
+    //         audio: './assets/mp3/AnhKhongXauXa.mp3',
+    //         image: './assets/images/anhkhongxauxa.jpg',
+    //     },
+    //     {
+    //         name: 'Ngày Hôm Đó',
+    //         artists: ['Trung'],
+    //         audio: './assets/mp3/NgayHomDo.mp3',
+    //         image: './assets/images/ngayhomdo.jpg',
+    //     },
+    //     {
+    //         name: 'Đánh Đổi',
+    //         artists: ['Obito', 'MCK', 'Shiki'],
+    //         audio: './assets/mp3/DanhDoi.mp3',
+    //         image: './assets/images/danhdoi.png',
+    //     },
+    //     {
+    //         name: 'Anh Đã Ổn Hơn',
+    //         artists: ['MCK'],
+    //         audio: './assets/mp3/AnhDaOnHon.mp3',
+    //         image: './assets/images/anhdaonhon.png',
+    //     },
+    //     {
+    //         name: 'Buồn hay Vui',
+    //         artists: ['VSOUL', 'MCK', 'Obito', 'Ronboogz'],
+    //         audio: './assets/mp3/BuonHayVui.mp3',
+    //         image: './assets/images/buonhayvui.png',
+    //     },
+    //     {
+    //         name: 'Thờ Er',
+    //         artists: ['MCK'],
+    //         audio: './assets/mp3/ThoEr.mp3',
+    //         image: './assets/images/thoer.png',
+    //     },
+    //     {
+    //         name: 'Show Me Love',
+    //         artists: ['MCK'],
+    //         audio: './assets/mp3/ShowMeLove.mp3',
+    //         image: './assets/images/showmelove.png',
+    //     },
+    //     {
+    //         name: 'Chương 2 Của Tương Lai',
+    //         artists: ['Wean', 'MCK'],
+    //         audio: './assets/mp3/ChuongHaiCuaTuongLai.mp3',
+    //         image: './assets/images/chuong2cuatuonglai.png',
+    //     },
+    //     {
+    //         name: 'Anhs Ems',
+    //         artists: ['QNT', 'RZ Mas', 'Wxrdie'],
+    //         audio: './assets/mp3/AnhsEms.mp3',
+    //         image: './assets/images/anhsems.jpg',
+    //     },
+    //     {
+    //         name: 'Xuất Phát Điểm',
+    //         artists: ['Obito', 'Shiki'],
+    //         audio: './assets/mp3/XuatPhatDiem.mp3',
+    //         image: './assets/images/xuatphatdiem.jpg',
+    //     },
+    //     {
+    //         name: 'Tựa Đêm Nay',
+    //         artists: ['The Cassette'],
+    //         audio: './assets/mp3/TuaDemNay.mp3',
+    //         image: './assets/images/tuademnay.jpg',
+    //     },
+    //     {
+    //         name: 'Xích Thêm Chút',
+    //         artists: ['RPT Groovie', 'tlinh', 'MCK'],
+    //         audio: './assets/mp3/XTC.mp3',
+    //         image: './assets/images/xtc.jpg',
+    //     },
+    //     {
+    //         name: 'Xanh',
+    //         artists: ['Ngọt'],
+    //         audio: './assets/mp3/Xanh.mp3',
+    //         image: './assets/images/xanh.jpg',
+    //     },
+    //     {
+    //         name: 'Dalat',
+    //         artists: ['Thoại 004'],
+    //         audio: './assets/mp3/Dalat.mp3',
+    //         image: './assets/images/dalat.jfif',
+    //     },
+    //     {
+    //         name: 'Một Hôm Trên Những Mái Nhà',
+    //         artists: ['Thoại 004'],
+    //         audio: './assets/mp3/MotHomTrenNhungMaiNha.mp3',
+    //         image: './assets/images/mothomtrennhungmainha.jfif',
+    //     },
+    //     {
+    //         name: 'Thiên Hà Trước Hiên Nhà',
+    //         artists: ['Datmaniac'],
+    //         audio: './assets/mp3/ThienHaTruocHienNha.mp3',
+    //         image: './assets/images/thienhatruochiennha.jfif',
+    //     },
+    // ],
 
     getSongs: async function () {
         try {
-            const response = await fetch(songsAPI);
+            const response = await fetch(songAPI, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    page: 1,
+                    limit: 9,
+                }),
+            });
+
             if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
             const data = await response.json();
-            this.songs = data; // Assuming `data` is an array of song objects
-            this.start();
+            console.log('Danh sách bài hát:', data);
+            return data.songs; // Trả về danh sách bài hát
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+            console.error('Đã xảy ra lỗi:', error);
+            return null; // Trả về null nếu có lỗi
         }
     },
 
@@ -316,11 +329,6 @@ const app = {
                 _this.currentIndex = Number(songNode.dataset.index);
                 _this.loadCurrentSong();
                 _this.render();
-                // var songItem = $$('.random-song__wrap')[_this.currentIndex];
-
-                // if (!songItem.classList.contains('playing')) {
-                //     songItem.classList.toggle('playing');
-                // }
                 playbar.classList.add('playing');
                 audio.play();
                 cdAnimate.play();
@@ -336,11 +344,6 @@ const app = {
                 _this.currentIndex = Number(songNode.dataset.index);
                 _this.loadCurrentSong();
                 _this.render();
-                // var songItem = $$('.other-song__wrap')[_this.currentIndex];
-
-                // if (!songItem.classList.contains('playing')) {
-                //     songItem.classList.toggle('playing');
-                // }
                 playbar.classList.add('playing');
                 audio.play();
                 cdAnimate.play();
@@ -366,14 +369,14 @@ const app = {
 
     loadCurrentSong: function () {
         // Playbar
-        heading.textContent = this.currentSong.name;
-        artist.textContent = this.currentSong.artists;
+        heading.textContent = this.currentSong.title;
+        artist.textContent = this.currentSong.userName;
         cd.style.backgroundImage = `url('${this.currentSong.image}')`;
         audio.src = this.currentSong.audio;
 
         // Sidebar
-        headingCurrentSong.textContent = this.currentSong.name;
-        artistCurrentSong.textContent = this.currentSong.artists;
+        headingCurrentSong.textContent = this.currentSong.title;
+        artistCurrentSong.textContent = this.currentSong.userName;
         avatarCurrentSong.style.backgroundImage = `url('${this.currentSong.image}')`;
     },
 
@@ -403,26 +406,20 @@ const app = {
         this.loadCurrentSong();
     },
 
-    createRandomSong: function () {
-        // // Hàm trộn ngẫu nhiên
-        // function shuffle(array) {
-        //     for (let i = array.length - 1; i > 0; i--) {
-        //         const j = Math.floor(Math.random() * (i + 1));
-        //         // [array[i], array[j]] = [array[j], array[i]]; // Hoán đổi
-        //     }
-        // }
-
+    createRandomSong: async function () {
         // // Tạo bản sao của danh sách bài hát để trộn
         // const songsCopy = [...this.songs];
-
-        // // Trộn danh sách bài hát
-        // shuffle(songsCopy);
 
         // // Chọn số lượng bài nhạc ngẫu nhiên
         // const randomSongs = songsCopy.slice(0, 9);
 
         // // Cập nhật mảng randomPlayList
         // this.randomPlayList = randomSongs;
+        // const songs = await getSongs();
+        // if (songs) {
+        //     // renderSongs(songs.songs);
+        //     console.log(songs);
+        // }
 
         const htmls = this.songs.map((song, index) => {
             return `
@@ -433,7 +430,7 @@ const app = {
                                 style="background-image: url('${song.image}')"
                                 class="random-song__avt"
                             ></div>
-                            <span class="random-song__name">${song.name}</span>
+                            <span class="random-song__name">${song.title}</span>
                         </div>
                         <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
                         <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
@@ -445,13 +442,13 @@ const app = {
     },
 
     createOtherSong: function () {
-        // Tạo bản sao của danh sách bài hát gốc
-        const songsCopy = [...this.songs];
+        // // Tạo bản sao của danh sách bài hát gốc
+        // const songsCopy = [...this.songs];
 
-        // Lọc các bài hát đã có trong randomPlayList
-        const otherSongs = songsCopy.filter((song) => !this.randomPlayList.includes(song));
+        // // Lọc các bài hát đã có trong randomPlayList
+        // const otherSongs = songsCopy.filter((song) => !this.randomPlayList.includes(song));
 
-        const htmls = otherSongs.map((song, index) => {
+        const htmls = this.songs.map((song, index) => {
             return `
                 <div class="col-lg-3">
                     <div class="other-song__wrap  ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
@@ -459,8 +456,8 @@ const app = {
                             style="background-image: url('${song.image}')"
                             class="other-song__avt"
                         ></div>
-                        <p class="other-song__name">${song.name}</p>
-                        <p class="other-song__artists">${song.artists}</p>
+                        <p class="other-song__name">${song.title}</p>
+                        <p class="other-song__artists">${song.userName}</p>
                         <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
                         <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
                     </div>
@@ -470,18 +467,15 @@ const app = {
         otherList.innerHTML = htmls.join('');
     },
 
-    start: function () {
-        // Định nghĩa các thuộc tính cho Object
-        this.defineProperties();
+    start: async function () {
+        this.defineProperties(); // Định nghĩa các thuộc tính cho Object
 
-        // Lắng nghe / xử lý các sự kiện (DOM events)
-        this.handleEvents();
-
-        // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
-        this.loadCurrentSong();
-
-        // Render playlist
-        this.render();
+        this.songs = await this.getSongs(); // Lấy danh sách bài hát
+        if (this.songs) {
+            this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
+            this.render(); // Render playlist
+            this.handleEvents(); // Lắng nghe xử lý các sự kiện
+        }
     },
 };
 
