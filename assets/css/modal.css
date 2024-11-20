@@ -123,13 +123,16 @@
 }
 
 
-/* Login Modal */
+/* 
+Login Modal 
+Signup Modal
+*/
 .login-container,
 .signup-container,
 .verify-container {
     position: fixed;
     left: 50%;
-    transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(0);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -142,12 +145,9 @@
     z-index: 5;
 }
 
-.verify-container {
-    display: flex;
-}
-
 .login-container.show,
-.signup-container.show {
+.signup-container.show,
+.verify-container.show {
     transform: translateX(-50%) scale(1);
     opacity: 1;
 }
@@ -230,7 +230,8 @@
 
 .login-container .button-sign-up,
 .signup-container .button-sign-up,
-.signup-container .button-create {
+.signup-container .button-create,
+.verify-container .button-verify {
     font-size: 1.6rem;
     width: 100%;
     padding: 1rem;
@@ -244,7 +245,8 @@
 
 .login-container .button-sign-up:hover,
 .signup-container .button-sign-up:hover,
-.signup-container .button-create:hover {
+.signup-container .button-create:hover,
+.verify-container .button-verify:hover {
     background-color: black;
     color: white;
 }
@@ -264,4 +266,17 @@
 .login-container .button-forgot:hover {
     background-color: red;
     color: white;
+}
+
+.verify-container .code-verify {
+    display: flex;
+    margin-top: 20px;
+    gap: 40px;
+}
+
+.verify-container .code-verify .input-field {
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+    font-size: 2rem;
+    text-align: center;
+    padding: 10px;
 }

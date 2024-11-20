@@ -31,10 +31,11 @@ function closeUploadModal() {
     }, 300); // Thời gian trễ bằng với thời gian hiệu ứng
 }
 
-//Login/Signup Modal
+//Login/Signup/Verify Modal
 const loginModal = document.querySelector('.user-icon');
 const loginContainer = document.querySelector('.login-container');
 const signupContainer = document.querySelector('.signup-container');
+const verifyContainer = document.querySelector('.verify-container');
 
 loginModal.addEventListener('click', () => {
     if (!loginContainer.classList.contains('show')) {
@@ -51,6 +52,7 @@ loginModal.addEventListener('click', () => {
 
 overlay.addEventListener('click', closeLoginModal);
 overlay.addEventListener('click', closeSignUpModal);
+overlay.addEventListener('click', closeVerifyModal);
 
 function closeLoginModal() {
     loginContainer.classList.remove('show');
@@ -64,19 +66,31 @@ function closeLoginModal() {
 }
 
 function closeSignUpModal() {
-    signupContainer.classList.remove('show'); // Xóa class 'show'
+    signupContainer.classList.remove('show');
     overlay.style.display = 'none';
     body.style.overflow = 'auto';
 
     // Đặt timeout để ẩn loginContainer sau khi hiệu ứng hoàn tất
     setTimeout(() => {
-        signupContainer.style.display = 'none'; // Ẩn modal
+        signupContainer.style.display = 'none';
+    }, 300); // Thời gian trễ bằng với thời gian hiệu ứng
+}
+
+function closeVerifyModal() {
+    verifyContainer.classList.remove('show');
+    overlay.style.display = 'none';
+    body.style.overflow = 'auto';
+
+    // Đặt timeout để ẩn loginContainer sau khi hiệu ứng hoàn tất
+    setTimeout(() => {
+        verifyContainer.style.display = 'none';
     }, 300); // Thời gian trễ bằng với thời gian hiệu ứng
 }
 
 // Xử lý chuyển đổi giữa login và signup
 const signupButton = document.querySelector('.button-sign-up'); // Nút tạo tài khoản
 const backToLoginButton = document.querySelector('.button-backto-login'); // Nút quay lại đăng nhập
+const createAccountButton = document.querySelector('.button-create');
 
 signupButton.addEventListener('click', () => {
     if (!signupContainer.classList.contains('show')) {
@@ -94,6 +108,17 @@ backToLoginButton.addEventListener('click', () => {
     signupContainer.style.display = 'none';
     loginContainer.style.display = 'flex';
     loginContainer.classList.add('show');
+});
+
+createAccountButton.addEventListener('click', () => {
+    if (!verifyContainer.classList.contains('show')) {
+        signupContainer.classList.remove('show');
+        signupContainer.style.display = 'none';
+        verifyContainer.style.display = 'flex';
+        verifyContainer.classList.add('show');
+    } else {
+        closeVerifyModal();
+    }
 });
 
 // Xử lý khi click menu sidebar left
