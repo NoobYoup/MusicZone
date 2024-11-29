@@ -27,6 +27,20 @@
     height: 100%;
 }
 
+.carousel-item {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%);
+    top: 50%;
+    background-color: var(--color-dark-gray);
+    border-radius: 50%;
+}
+
 .scrollable {
     overflow: auto;
     overflow-x: hidden;
@@ -52,6 +66,21 @@
 .other__list {
     margin: 8px;
 }
+
+.other__list {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: hidden;
+    /* flex-wrap: nowrap; */
+    align-items: center;
+}
+
+.other-song__item {
+    min-width: 20%;
+    box-sizing: border-box;
+}
+
 
 .random-song__wrap {
     display: flex;
@@ -90,7 +119,7 @@
 .random-list__heading {
     color: #fff;
     width: 100%;
-    margin: 12px 6px;
+    margin: 12px;
     font-size: 2.5rem;
 }
 
@@ -132,7 +161,7 @@
 .other-list__heading {
     color: #fff;
     width: 100%;
-    margin: 12px 6px;
+    margin: 12px;
     font-size: 2rem;
     font-weight: 550;
 }
@@ -140,7 +169,7 @@
 .other-song__wrap {
     background-color: #212121;
     border-radius: 8px;
-    margin: 16px 6px;
+    /* margin: 16px 6px; */
     padding: 8px;
     transition: all 0.2s ease;
     position: relative;
@@ -380,6 +409,224 @@ input[type='range']::-webkit-slider-thumb {
 /* End playbar */
 
 
+/*Start: Upload page */
+.single-add-song .infomation-song {
+    font-size: 1.6rem;
+}
+
+.upload-progress-bar {
+    height: 5px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+.upload-progress-bar-inner {
+    width: 27%;
+    height: 100%;
+    background-color: #00bfa5;
+    border-radius: 2px;
+}
+
+.single-add-song .form-label {
+    /* font-weight: bold; */
+}
+
+.single-add-song .form-text {
+    font-size: 1.6rem;
+    color: var(--color-grey);
+}
+
+.single-add-song .form-control {
+    font-size: 1.6rem;
+}
+
+.single-add-song #genre {
+    font-size: 1.6rem;
+}
+
+.single-add-song .btn-upload {
+    margin-left: auto;
+    display: block;
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.single-add-song .btn-upload:hover {
+    background-color: #009688;
+}
+
+.single-add-song .add-artwork {
+    padding: 0 5rem;
+}
+
+.single-add-song .audio-upload {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ccc;
+    font-size: 1.5em;
+}
+
+.single-add-song .file-input:hover {
+    opacity: 0.8;
+}
+
+.single-add-song .artwork-placeholder {
+    padding: 50px;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ccc;
+    font-size: 1.5em;
+}
+
+.single-add-song .artwork-placeholder i,
+.single-add-song .audio-upload i {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.track-info-header {
+    color: var(--color-grey);
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.track-info-header i {
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+.track-info-header span {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.track-info-header .track-file-name {
+    margin-left: auto;
+    font-size: 1em;
+    color: var(--color-grey);
+}
+
+.single-add-song .track-privacy-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.multiple-add-song {
+    font-size: 1.6rem;
+}
+
+.multiple-add-song .track-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.multiple-add-song .track-item:last-child {
+    border-bottom: none;
+}
+
+.multiple-add-song .track-index {
+    width: 30px;
+    text-align: center;
+}
+
+.multiple-add-song .track-progress {
+    width: 50px;
+    text-align: center;
+}
+
+.multiple-add-song .track-title {
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.multiple-add-song .track-duration {
+    /* width: 50px; */
+    text-align: center;
+}
+
+.multiple-add-song .track-actions {
+    width: 50px;
+    text-align: center;
+}
+
+.multiple-add-song .progress-circle {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: conic-gradient(green 0% 78%, #e0e0e0 78% 100%);
+}
+
+.multiple-add-song .progress-circle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+}
+
+.multiple-add-song .add-tracks {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+
+.multiple-add-song .add-tracks button {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+.multiple-add-song .add-tracks button:hover {
+    background-color: var(--color-dark);
+    color: white;
+}
+
+.multiple-add-song .track-action {
+    justify-content: space-around;
+}
+
+.multiple-add-song .btn-change,
+.multiple-add-song .btn-remove {
+    background-color: transparent;
+    border: 0;
+    color: white;
+    font-size: 2rem;
+}
+
+.multiple-add-song .btn-change:hover,
+.multiple-add-song .btn-remove:hover {
+    opacity: 0.6;
+}
+
+
+/*End: Upload page */
+
+
 /* Button */
 .btn:hover {
     cursor: pointer;
@@ -414,3 +661,37 @@ input[type='range']::-webkit-slider-thumb {
 .btn.active {
     color: var(--color-theme) !important;
 }
+
+/* .btn-prev,
+.btn-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    background-color: var(--color-dark-gray);
+    color: white;
+    border: 0;
+    border-radius: 50%;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    z-index: 1;
+}
+
+.btn-prev:hover,
+.btn-next:hover {
+    opacity: 0.7;
+}
+
+.btn-prev {
+    position: absolute;
+    left: 0;
+    margin-right: -40px;
+}
+
+.btn-next {
+    position: absolute;
+    right: 0;
+    margin-left: -40px;
+} */

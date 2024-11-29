@@ -28,7 +28,7 @@
 
 .upload-container p {
     font-size: 1.2rem;
-    color: #888;
+    color: var(--color-grey);
     margin: 0;
 }
 
@@ -73,7 +73,7 @@
     align-items: center;
     justify-content: center;
     /* min-height: 100px; */
-    border: 2px dashed #888;
+    border: 2px dashed var(--color-grey);
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
@@ -87,7 +87,7 @@
 .upload-box span {
     font-size: 1.2rem;
     margin: 10px 0 0;
-    color: #888;
+    color: var(--color-grey);
 }
 
 .upload-box a {

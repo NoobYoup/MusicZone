@@ -145,7 +145,8 @@
     margin: 6px 0 6px;
 }
 
-.current-song__artists {
+.current-song__artists,
+.current-song__description {
     font-size: 1.5rem;
     color: #b2b2b2;
     font-weight: 500;

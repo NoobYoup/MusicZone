@@ -6,6 +6,7 @@
 
 :root {
     --color-theme: #1DB954;
+    --color-grey: #888;
     --color-black: #191414;
     --color-dark-gray: #2c2c2e;
     --color-dark: #181818;
@@ -14,13 +15,14 @@
 }
 
 html {
+    scroll-behavior: smooth;
     font-size: 62.5%;
     font-family: sans-serif;
 }
 
 body {
     background-color: var(--color-black) !important;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 @keyframes scaleUp {

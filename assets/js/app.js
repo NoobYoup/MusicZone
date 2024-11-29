@@ -11,6 +11,7 @@ const audio = $('#audio__elem');
 const headingCurrentSong = $('.current-song__name');
 const avatarCurrentSong = $('.current-song__avt');
 const artistCurrentSong = $('.current-song__artists');
+const descriptionCurrentSong = $('.current-song__description');
 
 const playBtn = $('#play--main');
 const pauseBtn = $('#pause--main');
@@ -29,11 +30,17 @@ const randomList = $('.random__list');
 const otherList = $('.other__list');
 const currentSong = $('.current-song');
 
+const carouselInner = $('.carousel-inner');
+const carouselExamle = $('#carouselExample');
+const nextBtnSlide = $('#nextButton');
+const prevBtnSlide = $('#prevButton');
+
 const app = {
     // songs: [],
     randomPlayList: [],
     otherPlayList: [],
     currentIndex: 0,
+    carouselIndex: 0,
     isPlaying: false,
     isRandom: false,
     isRepeat: false,
@@ -336,8 +343,10 @@ const app = {
         };
 
         // Lắng nghe hành vi click vào otherList
-        otherList.onclick = function (e) {
+        carouselInner.onclick = function (e) {
             const songNode = e.target.closest('.other-song__wrap:not(.active)');
+
+            console.log(songNode);
 
             // Xử lý khi click vào song
             if (songNode) {
@@ -365,6 +374,20 @@ const app = {
                 }
             }
         };
+
+        // nextBtnSlide.onclick = function () {
+        //     _this.updateCarouselButton();
+        // };
+
+        // prevBtnSlide.onclick = function () {
+        //     _this.updateCarouselButton();
+        // };
+
+        carouselExamle.addEventListener('slid.bs.carousel', function () {
+            const items = document.querySelectorAll('.carousel-item');
+            _this.carouselIndex = Array.from(items).findIndex((item) => item.classList.contains('active'));
+            _this.updateCarouselButton(); // Cập nhật trạng thái nút
+        });
     },
 
     loadCurrentSong: function () {
@@ -378,6 +401,9 @@ const app = {
         headingCurrentSong.textContent = this.currentSong.title;
         artistCurrentSong.textContent = this.currentSong.userName;
         avatarCurrentSong.style.backgroundImage = `url('${this.currentSong.image}')`;
+        descriptionCurrentSong.textContent = this.currentSong.description;
+
+        console.log(this.currentSong.description);
     },
 
     nextSong: function () {
@@ -406,6 +432,21 @@ const app = {
         this.loadCurrentSong();
     },
 
+    updateCarouselButton: function () {
+        const totalItems = document.querySelectorAll('.carousel-item').length;
+        const activeIndex = this.carouselIndex;
+
+        // Disable "Prev" if we are on the first item
+        prevBtnSlide.disabled = activeIndex === 0;
+
+        // Disable "Next" if we are on the last item
+        nextBtnSlide.disabled = activeIndex === totalItems - 1;
+
+        console.log('Active Index:', activeIndex);
+        console.log('Prev Button Disabled:', activeIndex === 0);
+        console.log('Next Button Disabled:', activeIndex === totalItems - 1);
+    },
+
     createRandomSong: async function () {
         // // Tạo bản sao của danh sách bài hát để trộn
         // const songsCopy = [...this.songs];
@@ -432,7 +473,7 @@ const app = {
                             ></div>
                             <span class="random-song__name">${song.title}</span>
                         </div>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                        <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
                         <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
                     </div>
                 </div>
@@ -448,23 +489,63 @@ const app = {
         // // Lọc các bài hát đã có trong randomPlayList
         // const otherSongs = songsCopy.filter((song) => !this.randomPlayList.includes(song));
 
-        const htmls = this.songs.map((song, index) => {
-            return `
-                <div class="col-lg-3">
-                    <div class="other-song__wrap  ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
-                        <div
-                            style="background-image: url('${song.image}')"
-                            class="other-song__avt"
-                        ></div>
-                        <p class="other-song__name">${song.title}</p>
-                        <p class="other-song__artists">${song.userName}</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
+        const itemsPerPage = 5; // Số bài hát mỗi carousel item
+        const totalSongs = this.songs.length; // Tổng số bài hát
+        const totalItems = Math.ceil(totalSongs / itemsPerPage);
+
+        let htmls = '';
+        for (let i = 0; i < totalItems; i++) {
+            const songsForItem = this.songs.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+            htmls += `
+            <div class="carousel-item ${i === 0 ? 'active' : ''}" data-index="${i}" >
+                <div class="row other__list">
+                    ${songsForItem
+                        .map(
+                            (song, index) => `
+                        <div class="col-lg-2 other-song__item">
+                            <div class="other-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${
+                                i * itemsPerPage + index
+                            }">
+                                <div
+                                    style="background-image: url('${song.image}')"
+                                    class="other-song__avt"
+                                ></div>
+                                <p class="other-song__name">${song.title}</p>
+                                <p class="other-song__artists">${song.userName}</p>
+                                <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                                <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
+                            </div>
+                        </div>
+                    `,
+                        )
+                        .join('')}
                 </div>
-            `;
-        });
-        otherList.innerHTML = htmls.join('');
+            </div>
+            
+        `;
+        }
+
+        carouselInner.innerHTML = htmls; // Thêm các carousel item vào carousel
+
+        // const htmls = this.songs.map((song, index) => {
+        //     return `
+        //         <div class="col-lg-2 other-song__item">
+        //             <div class="other-song__wrap playing ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
+        //                 <div
+        //                     style="background-image: url('${song.image}')"
+        //                     class="other-song__avt"
+        //                 ></div>
+        //                 <p class="other-song__name">${song.title}</p>
+        //                 <p class="other-song__artists">${song.userName}</p>
+        //                 <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+        //                 <i
+        //                     class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"
+        //                 ></i>
+        //             </div>
+        //         </div>
+        //     `;
+        // });
+        // otherList.innerHTML = htmls.join('');
     },
 
     start: async function () {
@@ -475,6 +556,7 @@ const app = {
             this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
             this.render(); // Render playlist
             this.handleEvents(); // Lắng nghe xử lý các sự kiện
+            this.updateCarouselButton();
         }
     },
 };
