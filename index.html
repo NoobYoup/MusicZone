@@ -45,6 +45,13 @@
                     <div class="user-icon">
                         <i class="fa-solid fa-user"></i>
                         <span class="tooltip-user">Đăng nhập/Đăng ký</span>
+                        <!-- <div class="menu-user">
+                            <ul>
+                                <li><a href="#" class="user-menu-item">Trang cá nhân</a></li>
+
+                                <li><a href="#" class="user-menu-item">Đăng xuất</a></li>
+                            </ul>
+                        </div> -->
                     </div>
                     <div class="notification-icon">
                         <i class="fa-solid fa-bell"></i>
@@ -99,10 +106,13 @@
             <form class="login-container">
                 <h1 id="heading">Đăng nhập</h1>
                 <div style="margin: 2.5rem 0" class="btn">
-                    <button type="button" style="opacity: 0.7; font-size: 1.8rem" class="button-login">
+                    <a
+                        href="https://server-musiczone.vercel.app/auth/google"
+                        class="button-login text-decoration-none opacity-75"
+                    >
                         <img width="50px" src="./assets/images/google_icon.png" alt="google_icon" />
                         Google
-                    </button>
+                    </a>
                 </div>
                 <div class="field">
                     <i class="fa-regular fa-at"></i>
@@ -386,9 +396,6 @@
         ></script>
         <script src="./assets/js/app.js"></script>
         <script src="./assets/js/show.js"></script>
-        <!-- <script src="./assets/js/slide.js"></script> -->
         <script src="./assets/js/validator.js"></script>
-
-        <!-- <script src="./assets/js/main.js"></script> -->
     </body>
 </html>

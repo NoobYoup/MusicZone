@@ -45,129 +45,7 @@ const app = {
     isRandom: false,
     isRepeat: false,
     volumeAmount: 1,
-
-    // songs: [
-    //     {
-    //         name: 'Sau Chia Tay Còn Lại Gì',
-    //         artists: ['Youp'],
-    //         audio: './assets/mp3/SauChiaTayConLaiGi.mp3',
-    //         image: './assets/images/sauchiatayconlaigi.jpeg',
-    //     },
-    //     {
-    //         name: 'Sau Chia Tay Còn Lại Gì [Piano Version]',
-    //         artists: ['Youp'],
-    //         audio: './assets/mp3/SauChiaTayConLaiGiPiano.mp3',
-    //         image: './assets/images/sauchiatayconlaigipiano.png',
-    //     },
-    //     {
-    //         name: 'Em Có Nhớ',
-    //         artists: ['Trung'],
-    //         audio: './assets/mp3/EmCoNho.mp3',
-    //         image: './assets/images/emconho.jpg',
-    //     },
-    //     {
-    //         name: 'Ngày Hôm Đó & Anh Không Xấu Xa',
-    //         artists: ['Trung'],
-    //         audio: './assets/mp3/NgayHomDoAnhKhongXauXa.mp3',
-    //         image: './assets/images/ngayhomdoanhkhongxauxa.jpg',
-    //     },
-    //     {
-    //         name: 'Anh Không Xấu Xa',
-    //         artists: ['Trung'],
-    //         audio: './assets/mp3/AnhKhongXauXa.mp3',
-    //         image: './assets/images/anhkhongxauxa.jpg',
-    //     },
-    //     {
-    //         name: 'Ngày Hôm Đó',
-    //         artists: ['Trung'],
-    //         audio: './assets/mp3/NgayHomDo.mp3',
-    //         image: './assets/images/ngayhomdo.jpg',
-    //     },
-    //     {
-    //         name: 'Đánh Đổi',
-    //         artists: ['Obito', 'MCK', 'Shiki'],
-    //         audio: './assets/mp3/DanhDoi.mp3',
-    //         image: './assets/images/danhdoi.png',
-    //     },
-    //     {
-    //         name: 'Anh Đã Ổn Hơn',
-    //         artists: ['MCK'],
-    //         audio: './assets/mp3/AnhDaOnHon.mp3',
-    //         image: './assets/images/anhdaonhon.png',
-    //     },
-    //     {
-    //         name: 'Buồn hay Vui',
-    //         artists: ['VSOUL', 'MCK', 'Obito', 'Ronboogz'],
-    //         audio: './assets/mp3/BuonHayVui.mp3',
-    //         image: './assets/images/buonhayvui.png',
-    //     },
-    //     {
-    //         name: 'Thờ Er',
-    //         artists: ['MCK'],
-    //         audio: './assets/mp3/ThoEr.mp3',
-    //         image: './assets/images/thoer.png',
-    //     },
-    //     {
-    //         name: 'Show Me Love',
-    //         artists: ['MCK'],
-    //         audio: './assets/mp3/ShowMeLove.mp3',
-    //         image: './assets/images/showmelove.png',
-    //     },
-    //     {
-    //         name: 'Chương 2 Của Tương Lai',
-    //         artists: ['Wean', 'MCK'],
-    //         audio: './assets/mp3/ChuongHaiCuaTuongLai.mp3',
-    //         image: './assets/images/chuong2cuatuonglai.png',
-    //     },
-    //     {
-    //         name: 'Anhs Ems',
-    //         artists: ['QNT', 'RZ Mas', 'Wxrdie'],
-    //         audio: './assets/mp3/AnhsEms.mp3',
-    //         image: './assets/images/anhsems.jpg',
-    //     },
-    //     {
-    //         name: 'Xuất Phát Điểm',
-    //         artists: ['Obito', 'Shiki'],
-    //         audio: './assets/mp3/XuatPhatDiem.mp3',
-    //         image: './assets/images/xuatphatdiem.jpg',
-    //     },
-    //     {
-    //         name: 'Tựa Đêm Nay',
-    //         artists: ['The Cassette'],
-    //         audio: './assets/mp3/TuaDemNay.mp3',
-    //         image: './assets/images/tuademnay.jpg',
-    //     },
-    //     {
-    //         name: 'Xích Thêm Chút',
-    //         artists: ['RPT Groovie', 'tlinh', 'MCK'],
-    //         audio: './assets/mp3/XTC.mp3',
-    //         image: './assets/images/xtc.jpg',
-    //     },
-    //     {
-    //         name: 'Xanh',
-    //         artists: ['Ngọt'],
-    //         audio: './assets/mp3/Xanh.mp3',
-    //         image: './assets/images/xanh.jpg',
-    //     },
-    //     {
-    //         name: 'Dalat',
-    //         artists: ['Thoại 004'],
-    //         audio: './assets/mp3/Dalat.mp3',
-    //         image: './assets/images/dalat.jfif',
-    //     },
-    //     {
-    //         name: 'Một Hôm Trên Những Mái Nhà',
-    //         artists: ['Thoại 004'],
-    //         audio: './assets/mp3/MotHomTrenNhungMaiNha.mp3',
-    //         image: './assets/images/mothomtrennhungmainha.jfif',
-    //     },
-    //     {
-    //         name: 'Thiên Hà Trước Hiên Nhà',
-    //         artists: ['Datmaniac'],
-    //         audio: './assets/mp3/ThienHaTruocHienNha.mp3',
-    //         image: './assets/images/thienhatruochiennha.jfif',
-    //     },
-    // ],
+    token: '',
 
     getSongs: async function () {
         try {
@@ -375,14 +253,6 @@ const app = {
             }
         };
 
-        // nextBtnSlide.onclick = function () {
-        //     _this.updateCarouselButton();
-        // };
-
-        // prevBtnSlide.onclick = function () {
-        //     _this.updateCarouselButton();
-        // };
-
         carouselExamle.addEventListener('slid.bs.carousel', function () {
             const items = document.querySelectorAll('.carousel-item');
             _this.carouselIndex = Array.from(items).findIndex((item) => item.classList.contains('active'));
@@ -436,32 +306,14 @@ const app = {
         const totalItems = document.querySelectorAll('.carousel-item').length;
         const activeIndex = this.carouselIndex;
 
-        // Disable "Prev" if we are on the first item
-        prevBtnSlide.disabled = activeIndex === 0;
+        // Ẩn khi carouselItem = 0
+        prevBtnSlide.style.display = activeIndex === 0 ? 'none' : 'flex';
 
-        // Disable "Next" if we are on the last item
-        nextBtnSlide.disabled = activeIndex === totalItems - 1;
-
-        console.log('Active Index:', activeIndex);
-        console.log('Prev Button Disabled:', activeIndex === 0);
-        console.log('Next Button Disabled:', activeIndex === totalItems - 1);
+        // Ẩn khi carouselItem là phần tử cuối
+        nextBtnSlide.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
     },
 
     createRandomSong: async function () {
-        // // Tạo bản sao của danh sách bài hát để trộn
-        // const songsCopy = [...this.songs];
-
-        // // Chọn số lượng bài nhạc ngẫu nhiên
-        // const randomSongs = songsCopy.slice(0, 9);
-
-        // // Cập nhật mảng randomPlayList
-        // this.randomPlayList = randomSongs;
-        // const songs = await getSongs();
-        // if (songs) {
-        //     // renderSongs(songs.songs);
-        //     console.log(songs);
-        // }
-
         const htmls = this.songs.map((song, index) => {
             return `
                 <div class="col-lg-4">
@@ -483,12 +335,6 @@ const app = {
     },
 
     createOtherSong: function () {
-        // // Tạo bản sao của danh sách bài hát gốc
-        // const songsCopy = [...this.songs];
-
-        // // Lọc các bài hát đã có trong randomPlayList
-        // const otherSongs = songsCopy.filter((song) => !this.randomPlayList.includes(song));
-
         const itemsPerPage = 5; // Số bài hát mỗi carousel item
         const totalSongs = this.songs.length; // Tổng số bài hát
         const totalItems = Math.ceil(totalSongs / itemsPerPage);
@@ -556,7 +402,7 @@ const app = {
             this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
             this.render(); // Render playlist
             this.handleEvents(); // Lắng nghe xử lý các sự kiện
-            this.updateCarouselButton();
+            this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
         }
     },
 };

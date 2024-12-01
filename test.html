@@ -37,150 +37,86 @@
         </style>
     </head>
     <body>
-        <div class="slideshow-container">
-            <div class="row other__list" id="songList">
-                <!-- Mã HTML của các bài hát -->
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other-song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other-song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other-song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other-song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other-song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other_song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other_song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other_song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other_song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 other-song__item">
-                    <div class="other-song__wrap">
-                        <div style="background-image: url('./assets/images/99.jpg')" class="other-song__avt"></div>
-                        <p class="other-song__name">Thời er</p>
-                        <p class="other_song__artists">MCK, Lope Pham</p>
-                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
-                    </div>
-                </div>
+        <!-- Form Đăng Nhập -->
+        <form class="login-container">
+            <h1 id="heading">Đăng nhập</h1>
+            <div style="margin: 2.5rem 0" class="btn">
+                <a
+                    href="https://server-musiczone.vercel.app/auth/google"
+                    class="button-login text-decoration-none opacity-75"
+                    onclick="handleGoogleLogin(); return false;"
+                >
+                    <img width="50px" src="./assets/images/google_icon.png" alt="google_icon" />
+                    Google
+                </a>
             </div>
-        </div>
+        </form>
 
-        <div class="button-container">
-            <button id="prevBtn">Previous</button>
-            <button id="nextBtn">Next</button>
-        </div>
+        <!-- Form Xác Minh -->
+        <form class="verify-container" style="display: none">
+            <h1 id="heading">Mã xác minh</h1>
+            <div class="code-verify">
+                <input autocomplete="off" class="input-field" type="text" />
+                <input autocomplete="off" class="input-field" type="text" />
+                <input autocomplete="off" class="input-field" type="text" />
+                <input autocomplete="off" class="input-field" type="text" />
+            </div>
+            <div style="margin-bottom: 4em" class="btn">
+                <button type="button" class="button-verify">Xác minh</button>
+            </div>
+        </form>
 
         <script>
-            const songList = document.getElementById('songList');
-            const items = songList.children; // Lấy danh sách các bài hát
-            const totalItems = items.length; // Tổng số bài hát
-            const itemsPerMove = 2; // Số bài hát di chuyển mỗi lần
-            const itemsPerPage = 10; // Số bài hát hiển thị trên một trang
-            let currentIndex = 0; // Vị trí hiện tại (tính theo số phần tử)
+            // Giả sử bạn đã có token sau khi đăng nhập thành công
+            function handleGoogleLogin() {
+                // Thay thế bằng mã xử lý đăng nhập thực tế của bạn
+                const token = 'X0OLwLeyzMJzu4rJ69tEco1MT1FfKS3VCyHptvI4N9BIyU0DCMt9GpPMnAXiH7'; // Nhận token từ Google
 
-            function updateSlide() {
-                // Tính toán số lượng slide tối đa (chỉ số tối đa mà currentIndex có thể đạt)
-                currentIndex = Math.max(0, Math.min(currentIndex, totalItems)); // Giới hạn chỉ số trong phạm vi hợp lệ
+                // Lưu token vào local storage (hoặc session storage)
+                localStorage.setItem('googleToken', token);
 
-                console.log(currentIndex);
-                // Tính toán offset của slide dựa trên số phần tử
-                const offset = -(currentIndex * (100 / totalItems)); // Di chuyển slide
-                songList.style.transform = `translateX(${offset}%)`; // Cập nhật vị trí của slide
-
-                // Cập nhật chiều rộng của songList và mỗi item để tương ứng với số lượng phần tử
-                songList.style.width = `${(totalItems * 100) / itemsPerPage}%`;
-
-                Array.from(items).forEach((item) => {
-                    item.style.width = `${100 / itemsPerPage}%`; // Cập nhật chiều rộng của mỗi phần tử
-                });
-
-                // Vô hiệu hóa nút điều hướng khi đã đến giới hạn
-                document.querySelector('#prevBtn').disabled = currentIndex === 0;
-                document.querySelector('#nextBtn').disabled = currentIndex >= totalItems;
+                // Chuyển đến bước xác minh
+                document.querySelector('.login-container').style.display = 'none'; // Ẩn form đăng nhập
+                document.querySelector('.verify-container').style.display = 'block'; // Hiện form xác minh
             }
 
-            // Gán sự kiện cho các nút điều hướng
-            document.querySelector('#prevBtn').addEventListener('click', () => {
-                currentIndex -= itemsPerMove; // Lùi lại `itemsPerMove` phần tử
-                updateSlide();
+            // Lắng nghe sự kiện click vào nút đăng nhập
+            document.querySelector('.button-login').addEventListener('click', function (event) {
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+                handleGoogleLogin(); // Gọi hàm xử lý đăng nhập
             });
 
-            document.querySelector('#nextBtn').addEventListener('click', () => {
-                console.log(currentIndex);
-                currentIndex += itemsPerMove; // Tiến lên `itemsPerMove` phần tử
-                updateSlide();
-            });
+            document.querySelector('.button-verify').addEventListener('click', function () {
+                const codeInputs = document.querySelectorAll('.code-verify .input-field');
+                let verificationCode = '';
+                codeInputs.forEach((input) => {
+                    verificationCode += input.value; // Kết hợp giá trị từ các input
+                });
 
-            // Khởi động slide đầu tiên
-            updateSlide();
+                const token = localStorage.getItem('googleToken'); // Lấy token từ local storage
+
+                // Gửi mã xác minh và token đến server
+                fetch('https://your-server.com/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`, // Gửi token trong header
+                    },
+                    body: JSON.stringify({ verificationCode }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            // Chuyển tiếp hoặc thông báo thành công
+                            alert('Xác minh thành công!');
+                        } else {
+                            alert('Mã xác minh không hợp lệ.');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
         </script>
     </body>
 </html>

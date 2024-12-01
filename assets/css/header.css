@@ -105,7 +105,8 @@
 .profile .notification-icon .tooltip-notification,
 .profile .setting-icon .tooltip-setting {
     position: absolute;
-    margin-top: 100px;
+    bottom: 0;
+    margin-bottom: -26px;
     font-size: 1.6rem;
     visibility: hidden;
     background-color: #989a9c;
@@ -120,4 +121,33 @@
 .profile .notification-icon:hover .tooltip-notification,
 .profile .setting-icon:hover .tooltip-setting {
     visibility: visible;
+}
+
+.profile .menu-user {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: -40px;
+    background-color: var(--color-grey);
+    border-radius: 4px;
+}
+
+.profile .menu-user ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1.6rem;
+}
+
+.profile .menu-user li {
+    /* padding: 6px; */
+}
+
+.profile .menu-user li:hover {
+    background-color: var(--color-active);
+
+}
+
+.profile .menu-user a {
+    text-decoration: none;
+    color: black;
+
 }
