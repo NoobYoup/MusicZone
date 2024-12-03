@@ -27,7 +27,9 @@ const volume = $('.volumne__amount');
 const volumeProgress = $('.volumne__amount');
 
 const randomList = $('.random__list');
+const randomSongItem = $('.random-song__wrap');
 const otherList = $('.other__list');
+const otherSongItem = $('.other-song__wrap');
 const currentSong = $('.current-song');
 
 const carouselInner = $('.carousel-inner');
@@ -207,7 +209,7 @@ const app = {
 
         // Lắng nghe hành vi click vào randomList
         randomList.onclick = function (e) {
-            const songNode = e.target.closest('.random-song__wrap:not(.active)');
+            const songNode = e.target.closest('.random-song__wrap');
 
             // Xử lý khi click vào song
             if (songNode) {
@@ -223,8 +225,6 @@ const app = {
         // Lắng nghe hành vi click vào otherList
         carouselInner.onclick = function (e) {
             const songNode = e.target.closest('.other-song__wrap:not(.active)');
-
-            console.log(songNode);
 
             // Xử lý khi click vào song
             if (songNode) {
@@ -272,8 +272,6 @@ const app = {
         artistCurrentSong.textContent = this.currentSong.userName;
         avatarCurrentSong.style.backgroundImage = `url('${this.currentSong.image}')`;
         descriptionCurrentSong.textContent = this.currentSong.description;
-
-        console.log(this.currentSong.description);
     },
 
     nextSong: function () {
@@ -399,10 +397,10 @@ const app = {
 
         this.songs = await this.getSongs(); // Lấy danh sách bài hát
         if (this.songs) {
-            this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
-            this.render(); // Render playlist
             this.handleEvents(); // Lắng nghe xử lý các sự kiện
+            this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
             this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
+            this.render(); // Render playlist
         }
     },
 };

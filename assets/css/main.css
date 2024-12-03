@@ -19,7 +19,7 @@
 .container {
     margin-top: 16px;
     width: 100vw;
-    min-height: 1000px;
+    /* min-height: 1000px; */
 }
 
 .grid {
@@ -49,7 +49,8 @@
 
 
 .play-list,
-.current-song {
+.current-song,
+.profile-artist {
     max-height: 570px;
     background-color: var(--color-dark);
     border-radius: 10px;
@@ -623,9 +624,54 @@ input[type='range']::-webkit-slider-thumb {
     opacity: 0.6;
 }
 
+.edit-multiple-song {
+    background-color: white;
+    position: fixed;
+    right: 0;
+    top: 0;
+    font-size: 1.6rem;
+    padding: 20px;
+    width: 500px;
+    height: 100%;
+    z-index: 5;
+    /* display: none; */
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.edit-multiple-song.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+
+.edit-multiple-song .form-control,
+.edit-multiple-song .form-select {
+    font-size: 1.6rem;
+}
 
 /*End: Upload page */
 
+
+/* Start: Profile page */
+.profile-artist {
+    background: url(../images/sauchiatayconlaigi.jpeg) center / cover no-repeat;
+}
+
+.profile-artist .info-artist {
+    margin: auto 0;
+}
+
+.profile-artist .name-artist {
+    font-size: 7rem;
+}
+
+.content .info-song img {
+    width: 50px;
+}
+
+/* End: Profile page */
 
 /* Button */
 .btn:hover {

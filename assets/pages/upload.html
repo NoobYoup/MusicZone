@@ -12,9 +12,69 @@
         <link rel="stylesheet" href="../css/header.css" />
         <link rel="stylesheet" href="../css/sidebar.css" />
         <link rel="stylesheet" href="../css/modal.css" />
+        <link rel="stylesheet" href="../css/footer.css" />
         <title>Upload</title>
     </head>
     <body>
+        <div class="overlay"></div>
+
+        <!-- Edit Multiple Song -->
+        <div class="edit-multiple-song">
+            <h3 class="mb-4">Chỉnh sửa bài nhạc</h3>
+
+            <div class="mb-3">
+                <label for="trackTitle" class="form-label">Tên bài hát *</label>
+                <input type="text" class="form-control" id="trackTitle" value="sau chia tay còn lại gì (beat)" />
+            </div>
+            <!-- <div class="mb-3">
+                <label for="trackLink" class="form-label">Track link</label>
+                <input type="text" class="form-control" id="trackLink" value="https://soundcloud.com/noobyoup/" />
+            </div> -->
+            <div class="mb-3">
+                <label for="mainArtist" class="form-label">Nghệ sĩ chính *</label>
+                <input type="text" class="form-control" id="mainArtist" value="Youp" />
+                <div class="form-text">Mẹo: Dùng dấu , để thêm nhiều nghệ sĩ khác</div>
+            </div>
+            <div class="mb-3">
+                <label for="genre" class="form-label">Thể loại</label>
+                <select class="form-select" id="genre">
+                    <option selected>R&B</option>
+                    <option selected>Ballad</option>
+                    <option selected>Hiphop-Rap</option>
+                    <option selected>Bossanova</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <!-- <div class="mb-3">
+                <label for="tags" class="form-label">Tags</label>
+                <input type="text" class="form-control" id="tags" placeholder="Add styles, moods, tempo." />
+            </div> -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Mô tả</label>
+                <textarea
+                    class="form-control"
+                    id="description"
+                    rows="3"
+                    placeholder="Những bản nhạc có mô tả thường có nhiều lượt phát và tương tác hơn."
+                ></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Quyền riêng tư</label>
+                <div class="track-privacy-options d-flex">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="trackPrivacy" id="public" value="public" checked />
+                        <label class="form-check-label" for="public">Công khai</label>
+                    </div>
+                    <div class="form-check ms-3">
+                        <input class="form-check-input" type="radio" name="trackPrivacy" id="private" value="private" />
+                        <label class="form-check-label" for="private">Riêng tư</label>
+                    </div>
+                </div>
+            </div>
+            <!-- <button type="submit" class="btn-upload">Tải lên</button> -->
+        </div>
+        <!-- Edit Multiple Song -->
+
         <div class="container">
             <div class="track-info-header">
                 <a href="../../index.html" class="d-flex text-decoration-none">
@@ -31,7 +91,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="audio-upload">
-                                <input type="file" id="file-input" style="display: none" />
+                                <input type="file" id="file-input" class="d-none" />
                                 <label for="file-input" class="file-input" style="cursor: pointer">
                                     <i class="fa-light fa-file-audio"></i>
                                     <span class="ms-4">Chọn bài hát bạn muốn tải lên</span>
@@ -82,7 +142,7 @@
                                 class="form-control"
                                 id="description"
                                 rows="3"
-                                placeholder="Tracks with descriptions tend to get more plays and engagements."
+                                placeholder="Những bản nhạc có mô tả thường có nhiều lượt phát và tương tác hơn."
                             ></textarea>
                         </div>
                         <div class="mb-3">
@@ -111,7 +171,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn-upload">Tải lên</button>
+                        <!-- <button type="submit" class="btn-upload">Tải lên</button> -->
                     </form>
                 </div>
             </div>
@@ -141,9 +201,16 @@
                 </div>
 
                 <div class="add-tracks">
-                    <button type="button">+ Thêm bài</button>
+                    <input type="file" id="file-input" class="d-none" />
+                    <label for="file-input" class="btn rounded-5 bg-success fs-4 px-4"> +Thêm bài </label>
+                    <!-- <button type="button">+ Thêm bài</button></div> -->
                 </div>
+
+                <footer class="footer-upload">
+                    <button type="submit" class="btn-upload">Tải lên</button>
+                </footer>
             </div>
         </div>
+        <script src="../js/show.js"></script>
     </body>
 </html>
