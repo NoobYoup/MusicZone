@@ -1,4 +1,8 @@
-const songAPI = 'https://server-musiczone.vercel.app/api/v1/songs';
+const BASEURL = 'https://server-musiczone.vercel.app';
+
+const songAPI = `${BASEURL}/api/v1/songs`;
+const loginEmailAPI = `${BASEURL}/api/v1/account/login/email`;
+const createEmailAPI = `${BASEURL}/api/v1/account/register/email`;
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -36,6 +40,17 @@ const carouselInner = $('.carousel-inner');
 const carouselExamle = $('#carouselExample');
 const nextBtnSlide = $('#nextButton');
 const prevBtnSlide = $('#prevButton');
+
+// Chọn phần tử input
+const emailInput = $('input[name=email]');
+const passwordInput = $('input[name=password]');
+const userNameInput = $('input[name=userName]');
+const buttonLogin = $('.button-login.login-email');
+const buttonCreate = $('.button-create');
+
+const passwordSignUpInput = $('input.sigup-password[name=password]');
+
+console.log(passwordSignUpInput);
 
 const app = {
     // songs: [],
@@ -258,6 +273,83 @@ const app = {
             _this.carouselIndex = Array.from(items).findIndex((item) => item.classList.contains('active'));
             _this.updateCarouselButton(); // Cập nhật trạng thái nút
         });
+
+        buttonLogin.onclick = async function () {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            try {
+                const response = await fetch(loginEmailAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log(data);
+
+                if (data.code === 200) {
+                    _this.setCookie('token', data.token);
+                    alert('Đăng nhập thành công');
+                    loginContainer.style.display = 'none';
+                    closeLoginModal();
+                } else {
+                    alert('Đăng nhập thất bại: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Đã xảy ra lỗi:', error);
+                return null; // Trả về null nếu có lỗi
+            }
+        };
+
+        buttonCreate.onclick = async function () {
+            const user = userNameInput.value;
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            try {
+                const response = await fetch(createEmailAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user: user,
+                        email: email,
+                        password: password,
+                    }),
+                });
+
+                console.log(passwordInput);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log(data);
+
+                if (data.code === 200) {
+                    // _this.setCookie('token', data.token);
+
+                    signupContainer.style.display = 'none';
+                } else {
+                    alert('Tạo tài khoản thất bại: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Đã xảy ra lỗi:', error);
+                return null; // Trả về null nếu có lỗi
+            }
+        };
     },
 
     loadCurrentSong: function () {
@@ -309,6 +401,23 @@ const app = {
 
         // Ẩn khi carouselItem là phần tử cuối
         nextBtnSlide.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
+    },
+
+    setCookie: function (name, value, days = 7, path = '/') {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000); // set expiration time
+        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=${path}`;
+    },
+
+    getCookie: function (name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+        return null;
+    },
+
+    deleteCookie: function (name, path = '/') {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}`;
     },
 
     createRandomSong: async function () {
