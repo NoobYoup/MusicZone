@@ -1,63 +1,65 @@
-const BASEURL = "https://server-musiczone.vercel.app";
+const BASEURL = 'https://server-musiczone.vercel.app';
 
 const songAPI = `${BASEURL}/api/v1/songs`;
 const loginEmailAPI = `${BASEURL}/api/v1/account/login/email`;
 const createEmailAPI = `${BASEURL}/api/v1/account/register/email`;
 const verifyCodeAPI = `${BASEURL}/api/v1/account/register/otp`;
+const getUserByTokenAPI = `${BASEURL}/api/v1/user/token/`;
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
-const heading = $(".play-song__name");
-const artist = $(".play-song__artists");
-const cd = $(".play-song__avt");
-const audio = $("#audio__elem");
+const heading = $('.play-song__name');
+const artist = $('.play-song__artists');
+const cd = $('.play-song__avt');
+const audio = $('#audio__elem');
 
-const headingCurrentSong = $(".current-song__name");
-const avatarCurrentSong = $(".current-song__avt");
-const artistCurrentSong = $(".current-song__artists");
-const descriptionCurrentSong = $(".current-song__description");
+const headingCurrentSong = $('.current-song__name');
+const avatarCurrentSong = $('.current-song__avt');
+const artistCurrentSong = $('.current-song__artists');
+const descriptionCurrentSong = $('.current-song__description');
 
-const playBtn = $("#play--main");
-const pauseBtn = $("#pause--main");
-const nextBtn = $(".btn-next");
-const prevBtn = $(".btn-prev");
-const randomBtn = $("#shuffle");
-const repeatBtn = $("#loop");
-const playbar = $(".playbar__nav");
-const progress = $(".input__progress");
-const currentTime = $(".time--current");
-const duration = $(".time--total");
-const volume = $(".volumne__amount");
-const volumeProgress = $(".volumne__amount");
+const playBtn = $('#play--main');
+const pauseBtn = $('#pause--main');
+const nextBtn = $('.btn-next');
+const prevBtn = $('.btn-prev');
+const randomBtn = $('#shuffle');
+const repeatBtn = $('#loop');
+const playbar = $('.playbar__nav');
+const progress = $('.input__progress');
+const currentTime = $('.time--current');
+const duration = $('.time--total');
+const volume = $('.volumne__amount');
+const volumeProgress = $('.volumne__amount');
 
-const randomList = $(".random__list");
-const randomSongItem = $(".random-song__wrap");
-const otherList = $(".other__list");
-const otherSongItem = $(".other-song__wrap");
-const currentSong = $(".current-song");
+const randomList = $('.random__list');
+const randomSongItem = $('.random-song__wrap');
+const otherList = $('.other__list');
+const otherSongItem = $('.other-song__wrap');
+const currentSong = $('.current-song');
 
-const carouselInner = $(".carousel-inner");
-const carouselExamle = $("#carouselExample");
-const nextBtnSlide = $("#nextButton");
-const prevBtnSlide = $("#prevButton");
+const carouselInner = $('.carousel-inner');
+const carouselExamle = $('#carouselExample');
+const nextBtnSlide = $('#nextButton');
+const prevBtnSlide = $('#prevButton');
 
 // Chọn phần tử input
-const emailInput = $("input[name=email]");
-const passwordInput = $("input[name=password]");
-const userNameInput = $("input[name=userName]");
+const emailInput = $('input[name=email]');
+const passwordInput = $('input[name=password]');
+const userNameInput = $('input[name=userName]');
 
-const buttonLogin = $(".button-login.login-email");
-const buttonCreate = $(".button-create");
-const buttonVerify = $(".button-verify");
+const buttonLogin = $('.button-login.login-email');
+const buttonCreate = $('.button-create');
+const buttonVerify = $('.button-verify');
+const buttonSignUpGoogle = $('.button-google');
 
-const passwordSignUpInput = $("input.sigup-password-input");
-const emailSignUpInput = $("input.sigup-email-input");
+const passwordSignUpInput = $('input.sigup-password-input');
+const emailSignUpInput = $('input.sigup-email-input');
 
-const verifyCodeInputs = $$(".code-verify input");
-const verifyEmailInput = $(".email-otp");
+const verifyCodeInputs = $$('.code-verify input');
+const verifyEmailInput = $('.email-otp');
 
-console.log(verifyCodeInputs);
+let myUser = null;
 
 const app = {
     // songs: [],
@@ -69,14 +71,13 @@ const app = {
     isRandom: false,
     isRepeat: false,
     volumeAmount: 1,
-    token: "",
 
     getSongs: async function () {
         try {
             const response = await fetch(songAPI, {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     page: 1,
@@ -89,10 +90,10 @@ const app = {
             }
 
             const data = await response.json();
-            console.log("Danh sách bài hát:", data);
+            console.log('Danh sách bài hát:', data);
             return data.songs; // Trả về danh sách bài hát
         } catch (error) {
-            console.error("Đã xảy ra lỗi:", error);
+            console.error('Đã xảy ra lỗi:', error);
             return null; // Trả về null nếu có lỗi
         }
     },
@@ -103,7 +104,7 @@ const app = {
     },
 
     defineProperties: function () {
-        Object.defineProperty(this, "currentSong", {
+        Object.defineProperty(this, 'currentSong', {
             get: function () {
                 return this.songs[this.currentIndex];
             },
@@ -114,7 +115,7 @@ const app = {
         const _this = this;
 
         // Xử lý quay / dừng CD
-        const cdAnimate = cd.animate([{ transform: "rotate(360deg)" }], {
+        const cdAnimate = cd.animate([{ transform: 'rotate(360deg)' }], {
             duration: 10000, // 10 giây
             iterations: Infinity, // vòng lặp vô hạn
         });
@@ -124,7 +125,7 @@ const app = {
         // Khi nhạc được play
         playBtn.onclick = function () {
             _this.isPlaying = true;
-            playbar.classList.add("playing");
+            playbar.classList.add('playing');
             audio.play();
             cdAnimate.play();
         };
@@ -132,7 +133,7 @@ const app = {
         // Khi nhạc bị pause
         pauseBtn.onclick = function () {
             this.isPlaying = false;
-            playbar.classList.remove("playing");
+            playbar.classList.remove('playing');
             audio.pause();
             cdAnimate.pause();
         };
@@ -140,15 +141,13 @@ const app = {
         // Cập nhật button khi nhạc kết thúc
         audio.onended = function () {
             _this.isPlaying = false;
-            playbar.classList.remove("playing");
+            playbar.classList.remove('playing');
         };
 
         // Khi tiến độ bài hát thay đổi
         audio.ontimeupdate = function () {
             if (audio.duration) {
-                const progressPercent = Math.floor(
-                    (audio.currentTime / audio.duration) * 100
-                );
+                const progressPercent = Math.floor((audio.currentTime / audio.duration) * 100);
                 progress.value = progressPercent;
 
                 // Đổi màu thanh trượt
@@ -174,7 +173,7 @@ const app = {
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
-            return `${minutes}:${secs < 10 ? "0" : ""}${secs}`; // Đảm bảo hiển thị 2 chữ số cho giây
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; // Đảm bảo hiển thị 2 chữ số cho giây
         }
 
         // Cập nhật thời gian tổng khi bài hát được tải
@@ -190,7 +189,7 @@ const app = {
                 _this.nextSong();
             }
             _this.isPlaying = true;
-            playbar.classList.add("playing");
+            playbar.classList.add('playing');
             audio.play();
             cdAnimate.play();
             _this.render();
@@ -204,7 +203,7 @@ const app = {
                 _this.prevSong();
             }
             _this.isPlaying = true;
-            playbar.classList.add("playing");
+            playbar.classList.add('playing');
             audio.play();
             cdAnimate.play();
             _this.render();
@@ -213,13 +212,13 @@ const app = {
         // Xử lý bật / tắt random song
         randomBtn.onclick = function () {
             _this.isRandom = !_this.isRandom;
-            randomBtn.classList.toggle("active", _this.isRandom);
+            randomBtn.classList.toggle('active', _this.isRandom);
         };
 
         // Xử lý lặp lại một song
         repeatBtn.onclick = function () {
             _this.isRepeat = !_this.isRepeat;
-            repeatBtn.classList.toggle("active", _this.isRepeat);
+            repeatBtn.classList.toggle('active', _this.isRepeat);
         };
 
         // Xử lý next song khi audio ended
@@ -233,14 +232,14 @@ const app = {
 
         // Lắng nghe hành vi click vào randomList
         randomList.onclick = function (e) {
-            const songNode = e.target.closest(".random-song__wrap");
+            const songNode = e.target.closest('.random-song__wrap');
 
             // Xử lý khi click vào song
             if (songNode) {
                 _this.currentIndex = Number(songNode.dataset.index);
                 _this.loadCurrentSong();
                 _this.render();
-                playbar.classList.add("playing");
+                playbar.classList.add('playing');
                 audio.play();
                 cdAnimate.play();
             }
@@ -248,14 +247,14 @@ const app = {
 
         // Lắng nghe hành vi click vào otherList
         carouselInner.onclick = function (e) {
-            const songNode = e.target.closest(".other-song__wrap:not(.active)");
+            const songNode = e.target.closest('.other-song__wrap:not(.active)');
 
             // Xử lý khi click vào song
             if (songNode) {
                 _this.currentIndex = Number(songNode.dataset.index);
                 _this.loadCurrentSong();
                 _this.render();
-                playbar.classList.add("playing");
+                playbar.classList.add('playing');
                 audio.play();
                 cdAnimate.play();
             }
@@ -266,22 +265,20 @@ const app = {
             audio.volume = volumeProgress.value / 100;
 
             if (volumeProgress.value == 0) {
-                if (!$(".playbar__volumne").classList.contains("mute")) {
-                    $(".playbar__volumne").classList.add("mute");
+                if (!$('.playbar__volumne').classList.contains('mute')) {
+                    $('.playbar__volumne').classList.add('mute');
                 }
             } else {
                 _this.volumeAmount = volumeProgress.value / 100;
-                if ($(".playbar__volumne").classList.contains("mute")) {
-                    $(".playbar__volumne").classList.remove("mute");
+                if ($('.playbar__volumne').classList.contains('mute')) {
+                    $('.playbar__volumne').classList.remove('mute');
                 }
             }
         };
 
-        carouselExamle.addEventListener("slid.bs.carousel", function () {
-            const items = document.querySelectorAll(".carousel-item");
-            _this.carouselIndex = Array.from(items).findIndex((item) =>
-                item.classList.contains("active")
-            );
+        carouselExamle.addEventListener('slid.bs.carousel', function () {
+            const items = document.querySelectorAll('.carousel-item');
+            _this.carouselIndex = Array.from(items).findIndex((item) => item.classList.contains('active'));
             _this.updateCarouselButton(); // Cập nhật trạng thái nút
         });
 
@@ -291,9 +288,9 @@ const app = {
 
             try {
                 const response = await fetch(loginEmailAPI, {
-                    method: "POST",
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json",
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         email: email,
@@ -309,15 +306,15 @@ const app = {
                 console.log(data);
 
                 if (data.code === 200) {
-                    _this.setCookie("token", data.token);
-                    alert("Đăng nhập thành công");
-                    loginContainer.style.display = "none";
+                    _this.setCookie('token', data.token);
+                    alert('Đăng nhập thành công');
+                    loginContainer.style.display = 'none';
                     closeLoginModal();
                 } else {
-                    alert("Đăng nhập thất bại: " + data.message);
+                    alert('Đăng nhập thất bại: ' + data.message);
                 }
             } catch (error) {
-                console.error("Đã xảy ra lỗi:", error);
+                console.error('Đã xảy ra lỗi:', error);
                 return null; // Trả về null nếu có lỗi
             }
         };
@@ -331,9 +328,9 @@ const app = {
 
             try {
                 const response = await fetch(createEmailAPI, {
-                    method: "POST",
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json",
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         user: user,
@@ -348,24 +345,22 @@ const app = {
                 console.log(data);
                 if (data.code === 200) {
                     // _this.setCookie('token', data.token);
-                    signupContainer.classList.remove("show");
-                    signupContainer.style.display = "none";
-                    verifyContainer.style.display = "flex";
-                    verifyContainer
-                        .querySelector(".email-otp")
-                        .setAttribute("value", email);
-                    verifyContainer.classList.add("show");
+                    signupContainer.classList.remove('show');
+                    signupContainer.style.display = 'none';
+                    verifyContainer.style.display = 'flex';
+                    verifyContainer.querySelector('.email-otp').setAttribute('value', email);
+                    verifyContainer.classList.add('show');
                 } else {
-                    alert("Tạo tài khoản thất bại: " + data.message);
+                    alert('Tạo tài khoản thất bại: ' + data.message);
                 }
             } catch (error) {
-                console.error("Đã xảy ra lỗi:", error);
+                console.error('Đã xảy ra lỗi:', error);
                 return null; // Trả về null nếu có lỗi
             }
         };
 
         buttonVerify.onclick = async function () {
-            let otp = "";
+            let otp = '';
             const emailOTP = verifyEmailInput.value;
 
             verifyCodeInputs.forEach((item) => {
@@ -374,9 +369,9 @@ const app = {
 
             try {
                 const response = await fetch(verifyCodeAPI, {
-                    method: "POST",
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json",
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         email: emailOTP,
@@ -389,17 +384,25 @@ const app = {
                 const data = await response.json();
                 console.log(data);
                 if (data.code === 200) {
-                    _this.setCookie("token", data.token);
-                    alert("Tạo tài khoản thành công: " + data.message);
-                    verifyContainer.style.display = "none";
+                    _this.setCookie('token', data.token);
+                    alert('Tạo tài khoản thành công: ' + data.message);
+                    verifyContainer.style.display = 'none';
                     closeVerifyModal();
                 } else {
-                    alert("Tạo tài khoản thất bại: " + data.message);
+                    alert('Tạo tài khoản thất bại: ' + data.message);
                 }
             } catch (error) {
-                console.error("Đã xảy ra lỗi:", error);
+                console.error('Đã xảy ra lỗi:', error);
                 return null; // Trả về null nếu có lỗi
             }
+        };
+
+        buttonSignUpGoogle.onclick = function () {
+            const currentUrl = window.location.href;
+
+            sessionStorage.setItem('redirectUrl', currentUrl);
+
+            window.location.href = 'https://server-musiczone.vercel.app/auth/google';
         };
     },
 
@@ -444,44 +447,90 @@ const app = {
     },
 
     updateCarouselButton: function () {
-        const totalItems = document.querySelectorAll(".carousel-item").length;
+        const totalItems = document.querySelectorAll('.carousel-item').length;
         const activeIndex = this.carouselIndex;
 
         // Ẩn khi carouselItem = 0
-        prevBtnSlide.style.display = activeIndex === 0 ? "none" : "flex";
+        prevBtnSlide.style.display = activeIndex === 0 ? 'none' : 'flex';
 
         // Ẩn khi carouselItem là phần tử cuối
-        nextBtnSlide.style.display =
-            activeIndex === totalItems - 1 ? "none" : "flex";
+        nextBtnSlide.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
     },
 
-    setCookie: function (name, value, days = 7, path = "/") {
+    setCookie: function (name, value, days = 7, path = '/') {
         const expires = new Date();
         expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000); // set expiration time
-        document.cookie = `${name}=${encodeURIComponent(
-            value
-        )}; expires=${expires.toUTCString()}; path=${path}`;
+        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=${path}`;
     },
 
     getCookie: function (name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
-        if (parts.length === 2)
-            return decodeURIComponent(parts.pop().split(";").shift());
+        if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
         return null;
     },
 
-    deleteCookie: function (name, path = "/") {
+    deleteCookie: function (name, path = '/') {
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}`;
+    },
+
+    loadMyUser: async function () {
+        // Login google
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenResultURL = urlParams.get('token');
+
+        if (tokenResultURL) {
+            this.setCookie('token', tokenResultURL, 30);
+        }
+
+        // Lấy giá trị của redirectUrl từ sessionStorage
+        const redirectUrl = sessionStorage.getItem('redirectUrl');
+
+        // Kiểm tra xem redirectUrl có hợp lệ không (không phải null hoặc undefined)
+        if (redirectUrl) {
+            // Chuyển hướng người dùng tới redirectUrl
+            window.location.href = redirectUrl;
+            sessionStorage.removeItem('redirectUrl');
+        }
+        console.log('ok');
+        // Login google
+
+        let myToken = this.getCookie('token');
+
+        try {
+            const response = await fetch(getUserByTokenAPI + `${myToken}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.code == 200) {
+                myUser = data.user;
+
+                const userIcon = $('.user-icon');
+                const avatarUser = $('img.avatar-user');
+
+                // console.log(avatarUser);
+                avatarUser.style.display = 'block';
+                avatarUser.src = myUser.avatar;
+
+                userIcon.style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Đã xảy ra lỗi:', error);
+            return null; // Trả về null nếu có lỗi
+        }
     },
 
     createRandomSong: async function () {
         const htmls = this.songs.map((song, index) => {
             return `
                 <div class="col-lg-4">
-                    <div class="random-song__wrap ${
-                        index === this.currentIndex ? "active" : ""
-                    }" data-index="${index}">
+                    <div class="random-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
                         <div class="random-song__info">
                             <div
                                 style="background-image: url('${song.image}')"
@@ -495,7 +544,7 @@ const app = {
                 </div>
             `;
         });
-        randomList.innerHTML = htmls.join("");
+        randomList.innerHTML = htmls.join('');
     },
 
     createOtherSong: function () {
@@ -503,41 +552,32 @@ const app = {
         const totalSongs = this.songs.length; // Tổng số bài hát
         const totalItems = Math.ceil(totalSongs / itemsPerPage);
 
-        let htmls = "";
+        let htmls = '';
         for (let i = 0; i < totalItems; i++) {
-            const songsForItem = this.songs.slice(
-                i * itemsPerPage,
-                (i + 1) * itemsPerPage
-            );
+            const songsForItem = this.songs.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
             htmls += `
-            <div class="carousel-item ${
-                i === 0 ? "active" : ""
-            }" data-index="${i}" >
+            <div class="carousel-item ${i === 0 ? 'active' : ''}" data-index="${i}" >
                 <div class="row other__list">
                     ${songsForItem
                         .map(
                             (song, index) => `
                         <div class="col-lg-2 other-song__item">
-                            <div class="other-song__wrap ${
-                                index === this.currentIndex ? "active" : ""
-                            }" data-index="${i * itemsPerPage + index}">
+                            <div class="other-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${
+                                i * itemsPerPage + index
+                            }">
                                 <div
-                                    style="background-image: url('${
-                                        song.image
-                                    }')"
+                                    style="background-image: url('${song.image}')"
                                     class="other-song__avt"
                                 ></div>
                                 <p class="other-song__name">${song.title}</p>
-                                <p class="other-song__artists">${
-                                    song.userName
-                                }</p>
+                                <p class="other-song__artists">${song.userName}</p>
                                 <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
                                 <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
                             </div>
                         </div>
-                    `
+                    `,
                         )
-                        .join("")}
+                        .join('')}
                 </div>
             </div>
             
@@ -577,6 +617,8 @@ const app = {
             this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
             this.render(); // Render playlist
         }
+
+        this.loadMyUser();
     },
 };
 

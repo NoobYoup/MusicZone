@@ -492,6 +492,10 @@ input[type='range']::-webkit-slider-thumb {
     text-align: center;
     color: #ccc;
     font-size: 1.5em;
+    /* background-image: url(../images/99.jpg); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .single-add-song .artwork-placeholder i,
