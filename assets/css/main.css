@@ -481,18 +481,17 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 .single-add-song .artwork-placeholder {
-    padding: 50px;
+    /* padding: 50px; */
     border: 2px dashed #ccc;
     border-radius: 5px;
     width: 100%;
-    min-height: 200px;
+    min-height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: #ccc;
     font-size: 1.5em;
-    /* background-image: url(../images/99.jpg); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

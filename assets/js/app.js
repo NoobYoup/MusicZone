@@ -1,13 +1,15 @@
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
 const BASEURL = 'https://server-musiczone.vercel.app';
 
 const songAPI = `${BASEURL}/api/v1/songs`;
+const playlistTopTrendingAPI = `${BASEURL}/api/v1/playlist/toptrending`;
+const userAPI = `${BASEURL}/api/v1/user/`;
 const loginEmailAPI = `${BASEURL}/api/v1/account/login/email`;
 const createEmailAPI = `${BASEURL}/api/v1/account/register/email`;
 const verifyCodeAPI = `${BASEURL}/api/v1/account/register/otp`;
 const getUserByTokenAPI = `${BASEURL}/api/v1/user/token/`;
-
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
 
 const heading = $('.play-song__name');
 const artist = $('.play-song__artists');
@@ -38,12 +40,15 @@ const otherList = $('.other__list');
 const otherSongItem = $('.other-song__wrap');
 const currentSong = $('.current-song');
 
+const playlistTopTrending = $('.playlist-toptrending');
+const playlistUser = $('.playlist-user');
+
+const carouselControls = $$('.carousel-control');
 const carouselInner = $('.carousel-inner');
-const carouselExamle = $('#carouselExample');
+const carouselExample = $('#carouselExample');
 const nextBtnSlide = $('#nextButton');
 const prevBtnSlide = $('#prevButton');
 
-// Chọn phần tử input
 const emailInput = $('input[name=email]');
 const passwordInput = $('input[name=password]');
 const userNameInput = $('input[name=userName]');
@@ -58,6 +63,13 @@ const emailSignUpInput = $('input.sigup-email-input');
 
 const verifyCodeInputs = $$('.code-verify input');
 const verifyEmailInput = $('.email-otp');
+
+const uploadImagePreview = document.querySelector('.upload-image-preview');
+const uploadImageInput = document.querySelector('.upload-image-input');
+const uploadAudioPreview = document.querySelector('.upload-audio-preview');
+const uploadAudioInput = document.querySelector('.upload-audio-input');
+const source = document.querySelector('.upload-audio-preview source');
+const buttonUploadSong = document.querySelector('.btn-upload');
 
 let myUser = null;
 
@@ -98,9 +110,57 @@ const app = {
         }
     },
 
+    getPlaylistTopTrending: async function () {
+        try {
+            const response = await fetch(playlistTopTrendingAPI, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Danh sách playlist top trending:', data);
+            return data.playlists;
+        } catch (error) {
+            console.error(error.message);
+            return null;
+        }
+    },
+
+    getUser: async function () {
+        try {
+            const response = await fetch(userAPI, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    page: 1,
+                    limit: 9,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Danh sách user:', data);
+            return data.users; // Trả về danh sách bài hát
+        } catch (error) {
+            console.error('Đã xảy ra lỗi:', error);
+            return null; // Trả về null nếu có lỗi
+        }
+    },
+
     render: function () {
-        this.createRandomSong();
-        this.createOtherSong();
+        this.renderRandomSong();
+        this.renderTopTrending();
+        this.renderUser();
     },
 
     defineProperties: function () {
@@ -246,7 +306,7 @@ const app = {
         };
 
         // Lắng nghe hành vi click vào otherList
-        carouselInner.onclick = function (e) {
+        playlistTopTrending.onclick = function (e) {
             const songNode = e.target.closest('.other-song__wrap:not(.active)');
 
             // Xử lý khi click vào song
@@ -276,12 +336,37 @@ const app = {
             }
         };
 
-        carouselExamle.addEventListener('slid.bs.carousel', function () {
-            const items = document.querySelectorAll('.carousel-item');
-            _this.carouselIndex = Array.from(items).findIndex((item) => item.classList.contains('active'));
-            _this.updateCarouselButton(); // Cập nhật trạng thái nút
+        // // Xử lý slideshow
+        // carouselExample.addEventListener('slid.bs.carousel', function () {
+        //     const items = document.querySelectorAll('.carousel-item');
+        //     _this.carouselIndex = Array.from(items).findIndex((item) => item.classList.contains('active'));
+        //     _this.updateCarouselButton(); // Cập nhật trạng thái nút
+        // });
+
+        carouselControls.forEach((control) => {
+            control.addEventListener('click', function () {
+                const carouselId = this.dataset.carousel; // Lấy giá trị data-carousel
+                const carousel = document.querySelector(`#carouselExample${carouselId}`); // Lấy carousel tương ứng
+
+                // Kiểm tra nếu carousel không tồn tại
+                if (!carousel) {
+                    console.error(`Carousel with ID ${carouselId} not found`);
+                    return; // Thoát hàm nếu không tìm thấy carousel
+                }
+
+                // Thực hiện hành động (ví dụ: chuyển đến slide tiếp theo)
+                if (this.classList.contains('next')) {
+                    $(carousel).carousel('next');
+                } else {
+                    $(carousel).carousel('prev');
+                }
+
+                // Cập nhật nút sau khi chuyển slide
+                updateCarouselButton(carouselId); // Gọi hàm với carouselId
+            });
         });
 
+        // Xử lý khi đăng nhập bằng email password
         buttonLogin.onclick = async function () {
             const email = emailInput.value;
             const password = passwordInput.value;
@@ -319,6 +404,7 @@ const app = {
             }
         };
 
+        // Xử lý khi đăng ký bằng email passwork
         buttonCreate.onclick = async function () {
             const user = userNameInput.value;
             const email = emailSignUpInput.value;
@@ -359,6 +445,7 @@ const app = {
             }
         };
 
+        // Xử lý khi xác minh code OTP
         buttonVerify.onclick = async function () {
             let otp = '';
             const emailOTP = verifyEmailInput.value;
@@ -397,6 +484,7 @@ const app = {
             }
         };
 
+        // Xử lý khi đăng nhập bằng google
         buttonSignUpGoogle.onclick = function () {
             const currentUrl = window.location.href;
 
@@ -404,6 +492,80 @@ const app = {
 
             window.location.href = 'https://server-musiczone.vercel.app/auth/google';
         };
+
+        // // Xử lý xem trước hình ảnh upload
+        // uploadImageInput.onchange = function (e) {
+        //     if (e.target.files.length) {
+        //         const image = URL.createObjectURL(e.target.files[0]);
+
+        //         console.log(image);
+
+        //         uploadImagePreview.style.backgroundImage = `url('${image}')`;
+        //     }
+        // };
+
+        // // Xử lý nghe trước audio upload
+        // uploadAudioInput.onchange = function (e) {
+        //     if (e.target.files.length) {
+        //         const audio = URL.createObjectURL(e.target.files[0]);
+
+        //         source.src = audio;
+        //         uploadAudioPreview.load();
+        //     }
+        // };
+
+        // // Xử lý tải lên upload
+        // buttonUploadSong.onclick = async function (e) {
+        //     const form = document.querySelector('.single-add-song');
+        //     const formData = new FormData(form);
+
+        //     let tokenUpload = _this.getCookie('token');
+
+        //     console.log(tokenUpload);
+
+        //     const title = document.getElementById('trackTitle').value.trim();
+        //     const audioFile = document.getElementById('audio').files;
+        //     const imageFile = document.getElementById('image').files;
+
+        //     if (!title) {
+        //         alert('Tên bài hát không được để trống!');
+        //         return;
+        //     }
+        //     if (!audioFile.length > 0) {
+        //         alert('Bạn cần tải lên một file audio!');
+        //         return;
+        //     }
+        //     if (!imageFile.length > 0) {
+        //         alert('Bạn cần tải lên một hình ảnh!');
+        //         return;
+        //     }
+
+        //     console.log(title);
+        //     console.log(audioFile);
+        //     console.log(imageFile);
+
+        //     try {
+        //         const response = await fetch('https://server-musiczone.vercel.app/api/v1/songs/upload', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'multipart/form-data',
+        //                 Authorization: `Bearer ${tokenUpload}`,
+        //             },
+        //             body: formData,
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+
+        //         const result = await response.json();
+        //         console.log('Success:', result);
+        //         alert('Tải lên thành công!');
+        //     } catch (error) {
+        //         console.error('Error:', error);
+        //         alert('Có lỗi xảy ra, vui lòng thử lại.');
+        //     }
+        // };
     },
 
     loadCurrentSong: function () {
@@ -446,15 +608,28 @@ const app = {
         this.loadCurrentSong();
     },
 
-    updateCarouselButton: function () {
-        const totalItems = document.querySelectorAll('.carousel-item').length;
-        const activeIndex = this.carouselIndex;
+    updateCarouselButton: function (carouselId) {
+        const carousel = document.querySelector(`#carouselExample${carouselId}`);
 
-        // Ẩn khi carouselItem = 0
-        prevBtnSlide.style.display = activeIndex === 0 ? 'none' : 'flex';
+        // Kiểm tra nếu carousel không tồn tại
+        if (!carousel) {
+            console.error(`Carousel with ID ${carouselId} not found`);
+            return; // Thoát hàm nếu không tìm thấy carousel
+        }
 
-        // Ẩn khi carouselItem là phần tử cuối
-        nextBtnSlide.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
+        const totalItems = carousel.querySelectorAll('.carousel-item').length;
+        const activeIndex = Array.from(carousel.querySelectorAll('.carousel-item')).findIndex((item) =>
+            item.classList.contains('active'),
+        );
+
+        const prevBtn = carousel.querySelector('.prev');
+        const nextBtn = carousel.querySelector('.next');
+
+        // Ẩn nút prev nếu đang ở phần tử đầu tiên
+        prevBtn.style.display = activeIndex === 0 ? 'none' : 'flex';
+
+        // Ẩn nút next nếu đang ở phần tử cuối
+        nextBtn.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
     },
 
     setCookie: function (name, value, days = 7, path = '/') {
@@ -492,7 +667,6 @@ const app = {
             window.location.href = redirectUrl;
             sessionStorage.removeItem('redirectUrl');
         }
-        console.log('ok');
         // Login google
 
         let myToken = this.getCookie('token');
@@ -526,7 +700,7 @@ const app = {
         }
     },
 
-    createRandomSong: async function () {
+    renderRandomSong: async function () {
         const htmls = this.songs.map((song, index) => {
             return `
                 <div class="col-lg-4">
@@ -547,14 +721,14 @@ const app = {
         randomList.innerHTML = htmls.join('');
     },
 
-    createOtherSong: function () {
+    renderTopTrending: function () {
         const itemsPerPage = 5; // Số bài hát mỗi carousel item
-        const totalSongs = this.songs.length; // Tổng số bài hát
+        const totalSongs = this.playlistTopTrending.length; // Tổng số bài hát
         const totalItems = Math.ceil(totalSongs / itemsPerPage);
 
         let htmls = '';
         for (let i = 0; i < totalItems; i++) {
-            const songsForItem = this.songs.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+            const songsForItem = this.playlistTopTrending.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
             htmls += `
             <div class="carousel-item ${i === 0 ? 'active' : ''}" data-index="${i}" >
                 <div class="row other__list">
@@ -566,7 +740,7 @@ const app = {
                                 i * itemsPerPage + index
                             }">
                                 <div
-                                    style="background-image: url('${song.image}')"
+                                    style="background-image: url('${song.avatar}')"
                                     class="other-song__avt"
                                 ></div>
                                 <p class="other-song__name">${song.title}</p>
@@ -584,39 +758,66 @@ const app = {
         `;
         }
 
-        carouselInner.innerHTML = htmls; // Thêm các carousel item vào carousel
+        playlistTopTrending.innerHTML = htmls; // Thêm các carousel item vào carousel
+    },
 
-        // const htmls = this.songs.map((song, index) => {
-        //     return `
-        //         <div class="col-lg-2 other-song__item">
-        //             <div class="other-song__wrap playing ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
-        //                 <div
-        //                     style="background-image: url('${song.image}')"
-        //                     class="other-song__avt"
-        //                 ></div>
-        //                 <p class="other-song__name">${song.title}</p>
-        //                 <p class="other-song__artists">${song.userName}</p>
-        //                 <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
-        //                 <i
-        //                     class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"
-        //                 ></i>
-        //             </div>
-        //         </div>
-        //     `;
-        // });
-        // otherList.innerHTML = htmls.join('');
+    renderUser: function () {
+        const itemsPerPage = 5; // Số bài hát mỗi carousel item
+        const totalSongs = this.users.length; // Tổng số bài hát
+        const totalItems = Math.ceil(totalSongs / itemsPerPage);
+
+        let htmls = '';
+        for (let i = 0; i < totalItems; i++) {
+            const songsForItem = this.users.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+            htmls += `
+            <div class="carousel-item ${i === 0 ? 'active' : ''}" data-index="${i}" >
+                <div class="row other__list">
+                    ${songsForItem
+                        .map(
+                            (song, index) => `
+                        <div class="col-lg-2 other-song__item">
+                            <div class="other-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${
+                                i * itemsPerPage + index
+                            }">
+                                <div
+                                    style="background-image: url('${song.avatar}')"
+                                    class="other-song__avt"
+                                ></div>
+                                <p class="other-song__name">${song.follower}</p>
+                                <p class="other-song__artists">${song.userName}</p>
+                                <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                                <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
+                            </div>
+                        </div>
+                    `,
+                        )
+                        .join('')}
+                </div>
+            </div>
+            
+        `;
+        }
+
+        playlistUser.innerHTML = htmls; // Thêm các carousel item vào carousel
     },
 
     start: async function () {
-        this.defineProperties(); // Định nghĩa các thuộc tính cho Object
-
         this.songs = await this.getSongs(); // Lấy danh sách bài hát
-        if (this.songs) {
-            this.handleEvents(); // Lắng nghe xử lý các sự kiện
-            this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
-            this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
-            this.render(); // Render playlist
-        }
+        this.playlistTopTrending = await this.getPlaylistTopTrending(); // Lấy playlist top trending
+        this.users = await this.getUser(); // Lấy user
+
+        // Cập nhật cho từng carousel nếu cần
+        const carousels = document.querySelectorAll('.carouselExample'); // Giả sử bạn có nhiều carousel
+        carousels.forEach((carousel) => {
+            const carouselId = carousel.dataset.id; // Lấy ID từ dữ liệu nếu có
+            this.updateCarouselButton(carouselId); // Gọi hàm cập nhật cho từng carousel
+        });
+
+        this.defineProperties(); // Định nghĩa các thuộc tính cho Object
+        this.handleEvents(); // Lắng nghe xử lý các sự kiện
+        this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
+        this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
+        this.render(); // Render playlist
 
         this.loadMyUser();
     },

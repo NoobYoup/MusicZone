@@ -3,13 +3,13 @@
 }
 
 .footer-upload .btn-upload {
-    position: fixed;
-    right: 0;
+    display: block;
+    margin-left: auto;
+    margin-top: 10px;
     background-color: var(--color-theme);
     color: white;
     border: none;
     padding: 10px 60px;
-    margin: 12px 60px 0 20px;
     border-radius: 20px;
     font-size: 1em;
 }
