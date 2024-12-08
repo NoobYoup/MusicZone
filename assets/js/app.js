@@ -5,11 +5,12 @@ const BASEURL = 'https://server-musiczone.vercel.app';
 
 const songAPI = `${BASEURL}/api/v1/songs`;
 const playlistTopTrendingAPI = `${BASEURL}/api/v1/playlist/toptrending`;
-const userAPI = `${BASEURL}/api/v1/user/`;
+const userAPI = `${BASEURL}/api/v1/user/getUsers`;
 const loginEmailAPI = `${BASEURL}/api/v1/account/login/email`;
 const createEmailAPI = `${BASEURL}/api/v1/account/register/email`;
 const verifyCodeAPI = `${BASEURL}/api/v1/account/register/otp`;
 const getUserByTokenAPI = `${BASEURL}/api/v1/user/token/`;
+const songLikeAPI = `${BASEURL}/api/v1/songs/like`;
 
 const heading = $('.play-song__name');
 const artist = $('.play-song__artists');
@@ -71,7 +72,12 @@ const uploadAudioInput = document.querySelector('.upload-audio-input');
 const source = document.querySelector('.upload-audio-preview source');
 const buttonUploadSong = document.querySelector('.btn-upload');
 
+const containerPanes = $$('.js__container-panes');
+const showAll = $$('.js__show-all');
+
 let myUser = null;
+let iconFavoriteSongs;
+let playButtonSong;
 
 const app = {
     // songs: [],
@@ -133,15 +139,8 @@ const app = {
 
     getUser: async function () {
         try {
-            const response = await fetch(userAPI, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    page: 1,
-                    limit: 9,
-                }),
+            const response = await fetch(userAPI + '?countRecord=10', {
+                method: 'GET',
             });
 
             if (!response.ok) {
@@ -291,19 +290,38 @@ const app = {
         };
 
         // Lắng nghe hành vi click vào randomList
-        randomList.onclick = function (e) {
-            const songNode = e.target.closest('.random-song__wrap');
+        // randomList.onclick = function (e) {
+        //     const songNode = e.target.closest('.random-song__wrap');
 
-            // Xử lý khi click vào song
-            if (songNode) {
-                _this.currentIndex = Number(songNode.dataset.index);
-                _this.loadCurrentSong();
-                _this.render();
-                playbar.classList.add('playing');
-                audio.play();
-                cdAnimate.play();
-            }
-        };
+        //     console.log(songNode);
+
+        //     // Xử lý khi click vào song
+        //     if (songNode) {
+        //         _this.currentIndex = Number(songNode.dataset.index);
+        //         _this.loadCurrentSong();
+        //         _this.render();
+        //         playbar.classList.add('playing');
+        //         audio.play();
+        //         cdAnimate.play();
+        //     }
+        // };
+
+        playButtonSong.forEach((play) => {
+            play.addEventListener('click', (e) => {
+                let songNode = play.closest('.random-song__wrap');
+
+                // Kiểm tra và làm gì đó với songNode
+                if (songNode) {
+                    console.log(songNode);
+                    _this.currentIndex = Number(songNode.dataset.index);
+                    _this.loadCurrentSong();
+                    // _this.render();
+                    playbar.classList.add('playing');
+                    audio.play();
+                    cdAnimate.play();
+                }
+            });
+        });
 
         // Lắng nghe hành vi click vào otherList
         playlistTopTrending.onclick = function (e) {
@@ -343,28 +361,28 @@ const app = {
         //     _this.updateCarouselButton(); // Cập nhật trạng thái nút
         // });
 
-        carouselControls.forEach((control) => {
-            control.addEventListener('click', function () {
-                const carouselId = this.dataset.carousel; // Lấy giá trị data-carousel
-                const carousel = document.querySelector(`#carouselExample${carouselId}`); // Lấy carousel tương ứng
+        // carouselControls.forEach((control) => {
+        //     control.addEventListener('click', function () {
+        //         const carouselId = this.dataset.carousel; // Lấy giá trị data-carousel
+        //         const carousel = document.querySelector(`#carouselExample${carouselId}`); // Lấy carousel tương ứng
 
-                // Kiểm tra nếu carousel không tồn tại
-                if (!carousel) {
-                    console.error(`Carousel with ID ${carouselId} not found`);
-                    return; // Thoát hàm nếu không tìm thấy carousel
-                }
+        //         // Kiểm tra nếu carousel không tồn tại
+        //         if (!carousel) {
+        //             console.error(`Carousel with ID ${carouselId} not found`);
+        //             return; // Thoát hàm nếu không tìm thấy carousel
+        //         }
 
-                // Thực hiện hành động (ví dụ: chuyển đến slide tiếp theo)
-                if (this.classList.contains('next')) {
-                    $(carousel).carousel('next');
-                } else {
-                    $(carousel).carousel('prev');
-                }
+        //         // Thực hiện hành động (ví dụ: chuyển đến slide tiếp theo)
+        //         if (this.classList.contains('next')) {
+        //             $(carousel).carousel('next');
+        //         } else {
+        //             $(carousel).carousel('prev');
+        //         }
 
-                // Cập nhật nút sau khi chuyển slide
-                updateCarouselButton(carouselId); // Gọi hàm với carouselId
-            });
-        });
+        //         // Cập nhật nút sau khi chuyển slide
+        //         updateCarouselButton(carouselId); // Gọi hàm với carouselId
+        //     });
+        // });
 
         // Xử lý khi đăng nhập bằng email password
         buttonLogin.onclick = async function () {
@@ -566,6 +584,16 @@ const app = {
         //         alert('Có lỗi xảy ra, vui lòng thử lại.');
         //     }
         // };
+
+        // // CHUYỂN TAB CÁ NHÂN / KHÁM PHÁ / ZINGCHART
+        // showAll.forEach((tab, index) => {
+        //     tab.onclick = function () {
+        //         containerPanes[0].style.display = 'none';
+        //         containerPanes[1].style.display = 'none';
+        //         containerPanes[2].style.display = 'none';
+        //         containerPanes[index].style.display = 'block';
+        //     };
+        // });
     },
 
     loadCurrentSong: function () {
@@ -608,29 +636,29 @@ const app = {
         this.loadCurrentSong();
     },
 
-    updateCarouselButton: function (carouselId) {
-        const carousel = document.querySelector(`#carouselExample${carouselId}`);
+    // updateCarouselButton: function (carouselId) {
+    //     const carousel = document.querySelector(`#carouselExample${carouselId}`);
 
-        // Kiểm tra nếu carousel không tồn tại
-        if (!carousel) {
-            console.error(`Carousel with ID ${carouselId} not found`);
-            return; // Thoát hàm nếu không tìm thấy carousel
-        }
+    //     // Kiểm tra nếu carousel không tồn tại
+    //     if (!carousel) {
+    //         console.error(`Carousel with ID ${carouselId} not found`);
+    //         return; // Thoát hàm nếu không tìm thấy carousel
+    //     }
 
-        const totalItems = carousel.querySelectorAll('.carousel-item').length;
-        const activeIndex = Array.from(carousel.querySelectorAll('.carousel-item')).findIndex((item) =>
-            item.classList.contains('active'),
-        );
+    //     const totalItems = carousel.querySelectorAll('.carousel-item').length;
+    //     const activeIndex = Array.from(carousel.querySelectorAll('.carousel-item')).findIndex((item) =>
+    //         item.classList.contains('active'),
+    //     );
 
-        const prevBtn = carousel.querySelector('.prev');
-        const nextBtn = carousel.querySelector('.next');
+    //     const prevBtn = carousel.querySelector('.prev');
+    //     const nextBtn = carousel.querySelector('.next');
 
-        // Ẩn nút prev nếu đang ở phần tử đầu tiên
-        prevBtn.style.display = activeIndex === 0 ? 'none' : 'flex';
+    //     // Ẩn nút prev nếu đang ở phần tử đầu tiên
+    //     prevBtn.style.display = activeIndex === 0 ? 'none' : 'flex';
 
-        // Ẩn nút next nếu đang ở phần tử cuối
-        nextBtn.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
-    },
+    //     // Ẩn nút next nếu đang ở phần tử cuối
+    //     nextBtn.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
+    // },
 
     setCookie: function (name, value, days = 7, path = '/') {
         const expires = new Date();
@@ -700,22 +728,99 @@ const app = {
         }
     },
 
+    loadIconAfterRender: function () {
+        const _this = this;
+
+        iconFavoriteSongs = $$('.icon-favorite-song');
+        playButtonSong = $$('.btn-play-song');
+
+        iconFavoriteSongs.forEach((icon) => {
+            icon.addEventListener('click', async function () {
+                let type;
+                let idSong;
+
+                let songNodeLike = icon.closest('.random-song__wrap');
+                idSong = songNodeLike.getAttribute('id-song');
+
+                if (icon.querySelector('.heart-unlike').classList.contains('d-none')) {
+                    type = 'unlike';
+                }
+
+                if (icon.querySelector('.heart-like').classList.contains('d-none')) {
+                    type = 'like';
+                }
+
+                console.log(_this.getCookie('token'));
+
+                try {
+                    const response = await fetch(songLikeAPI, {
+                        method: 'PATCH',
+                        headers: {
+                            Authorization: `Bearer ${_this.getCookie('token')}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            type: type,
+                            idSong: idSong,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.code != 200) {
+                        alert('Lỗi tính năng like!');
+                    }
+                } catch (error) {
+                    console.error('Đã xảy ra lỗi:', error);
+                    return null; // Trả về null nếu có lỗi
+                }
+
+                icon.querySelector('.heart-unlike').classList.toggle('d-none');
+                icon.querySelector('.heart-like').classList.toggle('d-none');
+            });
+        });
+    },
+
     renderRandomSong: async function () {
         const htmls = this.songs.map((song, index) => {
+            let classLikeDNone = 'd-none';
+            let classUnlikeDNone = '';
+
+            // if (song.like.includes(myUser.id)) {
+            //     classLikeDNone = '';
+            // }
+
             return `
-                <div class="col-lg-4">
-                    <div class="random-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
-                        <div class="random-song__info">
-                            <div
-                                style="background-image: url('${song.image}')"
-                                class="random-song__avt"
-                            ></div>
-                            <span class="random-song__name">${song.title}</span>
+            <div class="col-lg-4">
+                <div class="random-song__wrap ${index === this.currentIndex ? 'active' : ''}" data-index="${index}" id-song="${
+                song._id
+            }">
+                    <div class="random-song__info">
+                        <div style="background-image: url('${song.image}')" class="random-song__avt">
+                            <div class="d-flex">
+                                <i
+                                    class="btn btn--medium btn--theme btn__play btn-play-song fa-solid fa-circle-play hide"
+                                ></i>
+                                <i
+                                    class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"
+                                ></i>
+                            </div>
                         </div>
-                        <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
+                        <span class="random-song__name">${song.title}</span>
+                    </div>
+
+                    <div class="d-flex ms-auto">
+                        <div class="d-flex ms-auto icon-favorite-song"> 
+                            <i class="btn btn--small text-light fa-light fa-heart ${classUnlikeDNone} heart-unlike"></i>
+                            <i class="btn btn--small text-danger fa-solid fa-heart ${classLikeDNone} heart-like"></i>
+                        </div>
+                        <i class="btn btn--small text-light fa-regular fa-ellipsis"></i>
                     </div>
                 </div>
+            </div> 
             `;
         });
         randomList.innerHTML = htmls.join('');
@@ -783,8 +888,17 @@ const app = {
                                     style="background-image: url('${song.avatar}')"
                                     class="other-song__avt"
                                 ></div>
-                                <p class="other-song__name">${song.follower}</p>
-                                <p class="other-song__artists">${song.userName}</p>
+                                <div class="d-flex justify-content-center">
+                                    <p class="other-song__name fs-4">
+                                    <i class="fa-light fa-users"></i>
+                                    ${song.follower}
+                                    </p>
+                                    <p class="other-song__name fs-4 ms-3">
+                                    <i class="fa-regular fa-waveform-lines"></i>
+                                    ${song.track}
+                                    </p>
+                                </div>
+                                <p class="other-song__artists text-center">${song.userName}</p>
                                 <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
                                 <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
                             </div>
@@ -794,7 +908,7 @@ const app = {
                         .join('')}
                 </div>
             </div>
-            
+
         `;
         }
 
@@ -806,20 +920,21 @@ const app = {
         this.playlistTopTrending = await this.getPlaylistTopTrending(); // Lấy playlist top trending
         this.users = await this.getUser(); // Lấy user
 
-        // Cập nhật cho từng carousel nếu cần
-        const carousels = document.querySelectorAll('.carouselExample'); // Giả sử bạn có nhiều carousel
-        carousels.forEach((carousel) => {
-            const carouselId = carousel.dataset.id; // Lấy ID từ dữ liệu nếu có
-            this.updateCarouselButton(carouselId); // Gọi hàm cập nhật cho từng carousel
-        });
+        // // Cập nhật cho từng carousel nếu cần
+        // const carousels = document.querySelectorAll('.carouselExample'); // Giả sử bạn có nhiều carousel
+        // carousels.forEach((carousel) => {
+        //     const carouselId = carousel.dataset.id; // Lấy ID từ dữ liệu nếu có
+        //     this.updateCarouselButton(carouselId); // Gọi hàm cập nhật cho từng carousel
+        // });
 
         this.defineProperties(); // Định nghĩa các thuộc tính cho Object
-        this.handleEvents(); // Lắng nghe xử lý các sự kiện
+        this.loadMyUser();
         this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
-        this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
+        // this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
         this.render(); // Render playlist
 
-        this.loadMyUser();
+        this.loadIconAfterRender();
+        this.handleEvents(); // Lắng nghe xử lý các sự kiện
     },
 };
 

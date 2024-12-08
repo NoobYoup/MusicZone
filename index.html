@@ -293,25 +293,38 @@
                         </div>
                     </div> -->
                     <div class="col-lg-10">
-                        <div class="play-list scrollable">
+                        <div class="play-list js__container-panes">
                             <h3 class="random-list__heading">Phát bài hát ngẫu nhiên</h3>
                             <div class="row random__list">
                                 <!-- <div class="col-lg-4">
                                     <div class="random-song__wrap">
                                         <div class="random-song__info">
-                                            <div
-                                                style="background-image: url('./assets/images/99.jpg')"
-                                                class="random-song__avt"
-                                            ></div>
+                                            <div style="background-image: url('./assets/images/99.jpg')" class="random-song__avt">
+                                                <div class="d-flex">
+                                                    <i
+                                                        class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"
+                                                    ></i>
+                                                    <i
+                                                        class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"
+                                                    ></i>
+                                                </div>
+                                            </div>
                                             <span class="random-song__name">99%</span>
                                         </div>
-                                        <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"></i>
+
+                                        <div class="d-flex ms-auto">
+                                            <i class="btn btn--small text-light btn__play fa-regular fa-ellipsis"></i>
+                                            <i class="btn btn--small text-light fa-light fa-heart"></i>
+                                            <i class="btn btn--small text-danger fa-solid fa-heart d-none"></i>
+                                        </div>
                                     </div>
                                 </div> -->
                             </div>
 
-                            <h3 class="other-list__heading">Top Trending Music Zone</h3>
+                            <div class="other-list__heading d-flex align-items-center justify-content-between">
+                                <h2>Top Trending Music Zone</h2>
+                                <h4 class="show-all-playlist js__show-all">Tất cả</h4>
+                            </div>
                             <div id="carouselExample1" class="carouselExample carousel slide">
                                 <div class="carousel-inner playlist-toptrending">
                                     <!-- <div class="carousel-item active">
@@ -339,7 +352,7 @@
                                         </div>
                                     </div> -->
                                 </div>
-                                <button
+                                <!-- <button
                                     class="carousel-control-prev carousel-control prev"
                                     type="button"
                                     data-bs-target="#carouselExample1"
@@ -360,19 +373,16 @@
                                 >
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
-                                </button>
+                                </button> -->
                             </div>
 
-                            <h3 class="other-list__heading">Nghệ sĩ bạn có thể biết</h3>
+                            <div class="other-list__heading d-flex align-items-center justify-content-between">
+                                <h2>Nghệ sĩ bạn có thể biết</h2>
+                                <h4 class="show-all-playlist js__show-all">Tất cả</h4>
+                            </div>
                             <div id="carouselExample2" class="carouselExample carousel slide">
                                 <div class="carousel-inner playlist-user">
                                     <!-- <div class="carousel-item active">
-                                        <div class="row other__list"></div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="row other__list"></div>
-                                    </div>
-                                    <div class="carousel-item">
                                         <div class="row other__list">
                                             <div class="col-lg-3 other-song__item">
                                                 <div class="other-song__wrap playing">
@@ -380,7 +390,16 @@
                                                         style="background-image: url('./assets/images/99.jpg')"
                                                         class="other-song__avt"
                                                     ></div>
-                                                    <p class="other-song__name">Thờ er</p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <h6 class="other-song__name">
+                                                            <i class="fa-light fa-users"></i>
+                                                            Thờ er
+                                                        </h6>
+                                                        <h6 class="other-song__name">
+                                                            <i class="fa-regular fa-waveform-lines"></i>
+                                                            Thờ er
+                                                        </h6>
+                                                    </div>
                                                     <p class="other-song__artists">MCK, Lope Pham</p>
                                                     <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
                                                     <i
@@ -391,7 +410,7 @@
                                         </div>
                                     </div> -->
                                 </div>
-                                <button
+                                <!-- <button
                                     class="carousel-control-prev carousel-control prev"
                                     type="button"
                                     data-bs-target="#carouselExample2"
@@ -412,7 +431,47 @@
                                 >
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
-                                </button>
+                                </button> -->
+                            </div>
+                        </div>
+
+                        <div class="all-trending js__container-panes">
+                            <div class="other-list__heading d-flex align-items-center justify-content-between">
+                                <h2>Top Trending</h2>
+                            </div>
+                            <div class="row other__list">
+                                <div class="col-lg-2 other-song__item mb-3">
+                                    <div class="other-song__wrap playing">
+                                        <div
+                                            style="background-image: url('./assets/images/99.jpg')"
+                                            class="other-song__avt"
+                                        ></div>
+                                        <p class="other-song__name">Thờ er</p>
+                                        <p class="other-song__artists">MCK, Lope Pham</p>
+                                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="all-user js__container-panes">
+                            <div class="other-list__heading d-flex align-items-center justify-content-between">
+                                <h2>Nghệ sĩ bạn có thể biết</h2>
+                            </div>
+                            <div class="row other__list">
+                                <div class="col-lg-2 other-song__item mb-3">
+                                    <div class="other-song__wrap playing">
+                                        <div
+                                            style="background-image: url('./assets/images/99.jpg')"
+                                            class="other-song__avt"
+                                        ></div>
+                                        <p class="other-song__name">Thờ er</p>
+                                        <p class="other-song__artists">MCK, Lope Pham</p>
+                                        <i class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                                        <i class="btn btn--medium btn--theme btn__pause fa-solid fa-chart-simple hide"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

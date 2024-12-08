@@ -50,8 +50,10 @@
 
 .play-list,
 .current-song,
-.profile-artist {
-    max-height: 570px;
+.profile-artist,
+.all-trending,
+.all-user {
+    /* max-height: 570px; */
     background-color: var(--color-dark);
     border-radius: 10px;
 }
@@ -90,7 +92,7 @@
     border-radius: 5px;
     align-items: center;
     transition: all 0.2s ease;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     margin: 6px 0;
     padding: 0;
 }
@@ -161,10 +163,15 @@
 /* Other song */
 .other-list__heading {
     color: #fff;
-    width: 100%;
+    /* width: 100%; */
     margin: 12px;
     font-size: 2rem;
     font-weight: 550;
+}
+
+.other-list__heading .show-all-playlist:hover {
+    color: var(--color-theme);
+    cursor: pointer;
 }
 
 .other-song__wrap {
