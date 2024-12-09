@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="detailSong.css">
+</head>
+
+<body>
+    <div class="container song-detail" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="player">
+                    <div class="info">
+                        <div class="detail">
+                            <div class="control">
+                                <i class="fi-rr-play" id="playPause"></i>
+                            </div>
+                            <div class="title">
+                                Đánh đổi
+                            </div>
+                            <div class="other">
+                                <div class="time-create">1 tháng trước</div>
+                                <div class="topic"># HipHop & Rap</div>
+                            </div>
+                        </div>
+                        <div class="audioPlayer">
+                            <div id="wave"></div>
+                            <div class="time">
+                                <span id="current">0:00</span> /
+                                <span id="duration">0:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="thumb">
+                        <img src="./assets//images/danhdoi.png" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="interact">
+                    <div class="view">
+                        <div class="listens">
+                            <img src="./listens.png" alt="">
+                            10000
+                        </div>
+                        <div class="like">
+                            <img src="./heart.png" alt="">
+                            3107
+                        </div>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Like</button>
+                        <button class="btn btn-secondary">Repost</button>
+                        <button class="btn btn-secondary">Share</button>
+                        <button class="btn btn-secondary">Add to Next Up</button>
+                    </div>
+                </div>
+                <div class="detail-song">
+                    <div class="user-card">
+                        <img src="./assets/images/chuong2cuatuonglai.png" alt="User Avatar">
+                        <div class="username">ngDucAnh</div>
+                        <div class="stats">
+                            <span>223 Followers</span> |
+                            <span>3 Track</span>
+                        </div>
+                        <button class="follow-btn">+ Follow</button>
+                        <button class="unfollow-btn d-none">x Unfollow</button>
+                    </div>
+                    <div class="description">
+                        <p>
+                            Obito - Đánh Đổi ft. MCK <br>
+                            Download/Stream "Đánh Đổi" Album: https://Obito.lnk.to/-DD<br>
+
+                            Composer: Obito, MCK<br>
+                            Music Producer: Shiki<br>
+                            Recording Studio: Ricky Star’s Studio, Seachains’s Studio<br>
+                            Mixing Engineer: Shiki<br>
+                            Mastering Engineers: Michael Cain (TOD), Vinc Pham (TOD)<br>
+
+                            MCK’s Team: LOPE PHAM<br>
+
+                            Project Manager: Nguyen Dang Vu<br>
+
+                            Visuals.<br>
+                            Video: Obito’s Team<br>
+                            Graphic Designer: Đinh Quý Trí Thông, Obito’s Team<br>
+                            Typography: Đinh Quý Trí Thông, Obito’s Team<br>
+
+                            Photography.<br>
+                            Creative Director: idoomythang<br>
+                            Art Direction: idoomythang, mtfkstargirl, Nguyen Dang Vu<br>
+                            Photographer: idoomythang<br>
+                            Photographer Assistants: Edy Pham, Trần Vũ Hồng Phúc<br>
+                            Location: Hùng Võ<br>
+                            Retoucher: Anh Le<br>
+                            Equipment: Cua Studio<br>
+
+                            Stylist: Thành Đạt (thanhdajt)<br>
+                            Makeup Artist: Trang Emj<br>
+                            Hair: Trang Emj<br>
+                            MUA Assistant: Van Anh<br>
+
+                            Artist’s Manager: Nguyen Dang Vu<br>
+                            BTS, Videographer and Assistant: mtfkstargirl<br>
+
+                            Starring: Ly Dang Dac Thanh, Ly Quoc Thang<br>
+
+                            Special thanks: Justatee, Big Daddy, Andree Right Hand, Ricky Star, Lang LD, Seachains,
+                            Willistic, xolitxo, wAvy, GILL, MINHPHAM, Michael Cain, Vinc Pham.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Related Tracks -->
+                <h4>Những bài nhạc bạn có thể biết</h4>
+                <div class="related-tracks">
+                    <div class="random-song__wrap">
+                        <div class="random-song__info">
+                            <div style="background-image: url('./assets/images/99.jpg')" class="random-song__avt">
+                                <div class="d-flex">
+                                    <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
+                                    <i class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"></i>
+                                </div>
+                            </div>
+                            <span class="random-song__name">Ambum 99%</span>
+                        </div>
+
+                        <div class="d-flex ms-auto">
+                            <i class="btn btn--small text-light btn__play fa-regular fa-ellipsis"></i>
+                            <i class="btn btn--small text-light fa-light fa-heart"></i>
+                            <i class="btn btn--small text-danger fa-solid fa-heart d-none"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script>
+        duration = document.querySelector("#duration");
+        current = document.querySelector("#current");
+        playPause = document.querySelector("#playPause");
+
+        var timeCalculator = function (value) {
+            second = Math.floor(value % 60);
+            minute = Math.floor((value / 60) % 60);
+
+            if (second < 10) {
+                second = "0" + second;
+            }
+
+            return minute + ":" + second;
+        };
+
+        //start wavesurfer object 
+        wavesurfer = WaveSurfer.create({
+            container: "#wave",
+            waveColor: "#B4F1CA",
+            progressColor: "#1ED760",
+            height: 100,
+            scrollParent: false
+        });
+
+        //load audio file
+        wavesurfer.load("./assets/mp3/DanhDoi.mp3");
+
+        //play and pause a player
+        playPause.addEventListener("click", function (e) {
+            wavesurfer.playPause();
+        });
+
+        //load audio duration on load
+        wavesurfer.on("ready", function (e) {
+            duration.textContent = timeCalculator(wavesurfer.getDuration());
+        });
+
+        //get updated current time on play
+        wavesurfer.on("audioprocess", function (e) {
+            current.textContent = timeCalculator(wavesurfer.getCurrentTime());
+        });
+
+        //change play button to pause on plying
+        wavesurfer.on("play", function (e) {
+            playPause.classList.remove("fi-rr-play");
+            playPause.classList.add("fi-rr-pause");
+        });
+
+        //change pause button to play on pause
+        wavesurfer.on("pause", function (e) {
+            playPause.classList.add("fi-rr-play");
+            playPause.classList.remove("fi-rr-pause");
+        });
+
+        //update current time on seek
+        wavesurfer.on("seek", function (e) {
+            current.textContent = timeCalculator(wavesurfer.getCurrentTime());
+        });
+    </script>
+</body>
+
+</html>
