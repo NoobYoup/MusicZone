@@ -319,9 +319,10 @@ const app = {
             play.addEventListener('click', (e) => {
                 let songNode = play.closest('.random-song__wrap');
 
+                console.log(songNode);
+
                 // Kiểm tra và làm gì đó với songNode
                 if (songNode) {
-                    console.log(songNode);
                     _this.currentIndex = Number(songNode.dataset.index);
                     _this.loadCurrentSong();
                     // _this.render();
@@ -329,6 +330,19 @@ const app = {
                     audio.play();
                     cdAnimate.play();
                 }
+
+                // let songNode1 = play.closest('.thumb');
+
+                // console.log(songNode1);
+
+                // if (songNode1) {
+                //     _this.currentIndex = Number(songNode1.dataset.index);
+                //     _this.loadCurrentSong();
+                //     // _this.render();
+                //     playbar.classList.add('playing');
+                //     audio.play();
+                //     cdAnimate.play();
+                // }
             });
         });
 
@@ -362,36 +376,6 @@ const app = {
                 }
             }
         };
-
-        // // Xử lý slideshow
-        // carouselExample.addEventListener('slid.bs.carousel', function () {
-        //     const items = document.querySelectorAll('.carousel-item');
-        //     _this.carouselIndex = Array.from(items).findIndex((item) => item.classList.contains('active'));
-        //     _this.updateCarouselButton(); // Cập nhật trạng thái nút
-        // });
-
-        // carouselControls.forEach((control) => {
-        //     control.addEventListener('click', function () {
-        //         const carouselId = this.dataset.carousel; // Lấy giá trị data-carousel
-        //         const carousel = document.querySelector(`#carouselExample${carouselId}`); // Lấy carousel tương ứng
-
-        //         // Kiểm tra nếu carousel không tồn tại
-        //         if (!carousel) {
-        //             console.error(`Carousel with ID ${carouselId} not found`);
-        //             return; // Thoát hàm nếu không tìm thấy carousel
-        //         }
-
-        //         // Thực hiện hành động (ví dụ: chuyển đến slide tiếp theo)
-        //         if (this.classList.contains('next')) {
-        //             $(carousel).carousel('next');
-        //         } else {
-        //             $(carousel).carousel('prev');
-        //         }
-
-        //         // Cập nhật nút sau khi chuyển slide
-        //         updateCarouselButton(carouselId); // Gọi hàm với carouselId
-        //     });
-        // });
 
         // Xử lý khi đăng nhập bằng email password
         buttonLogin.onclick = async function () {
@@ -594,16 +578,6 @@ const app = {
         //     }
         // };
 
-        // // CHUYỂN TAB CÁ NHÂN / KHÁM PHÁ / ZINGCHART
-        // showAll.forEach((tab, index) => {
-        //     tab.onclick = function () {
-        //         containerPanes[0].style.display = 'none';
-        //         containerPanes[1].style.display = 'none';
-        //         containerPanes[2].style.display = 'none';
-        //         containerPanes[index].style.display = 'block';
-        //     };
-        // });
-
         mainLogo.onclick = function () {
             homePage.classList.remove('d-none');
             songDetailPage.classList.add('d-none');
@@ -624,7 +598,50 @@ const app = {
         descriptionCurrentSong.textContent = this.currentSong.description;
     },
 
-    handleFollow: async function (type, idUser) {
+    nextSong: function () {
+        this.currentIndex++;
+        if (this.currentIndex >= this.songs.length) {
+            this.currentIndex = 0;
+        }
+        this.loadCurrentSong();
+    },
+
+    prevSong: function () {
+        this.currentIndex--;
+        if (this.currentIndex < 0) {
+            this.currentIndex = this.songs.length - 1;
+        }
+        this.loadCurrentSong();
+    },
+
+    playRandomSong: function () {
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * this.songs.length);
+        } while (newIndex === this.currentIndex);
+
+        this.currentIndex = newIndex;
+        this.loadCurrentSong();
+    },
+
+    setCookie: function (name, value, days = 7, path = '/') {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000); // set expiration time
+        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=${path}`;
+    },
+
+    getCookie: function (name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+        return null;
+    },
+
+    deleteCookie: function (name, path = '/') {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}`;
+    },
+
+    handleFollows: async function (type, idUser) {
         try {
             const response = await fetch(followUserAPI, {
                 method: 'PATCH',
@@ -716,32 +733,33 @@ const app = {
 
                 console.log(data.song);
                 songDetailPage.innerHTML = `
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="player">
-                            <div class="info">
-                                <div class="detail">
-                                    <div class="control">
-                                        <i class="fi-rr-play" id="playPause"></i>
-                                    </div>
-                                    <div class="title">${data.song.title}</div>
-                                    <div class="other">
-                                        <div class="time-create">${result}</div>
-                                        <div class="topic"># HipHop & Rap</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="thumb">
-                                <img src="${data.song.image}" alt="" />
-                            </div>
+                    <div class="player">
+                    <div class="thumb">
+                        <div class="random-song__avt" style="background-image: url(${data.song.image})" id-song="${data.song._id}">
+                            <i
+                                id="playPause"
+                                class="btn btn--big btn--theme btn__play btn-play-song fa-solid fa-circle-play hide h-100 align-items-center justify-content-center"
+                            ></i>
+                            <i
+                                id="playPause"
+                                class="btn btn--big btn--theme btn__pause fa-solid fa-circle-pause hide h-100 align-items-center justify-content-center"
+                            ></i>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
+
+                    <div class="info">
+                        <div class="detail">
+                            <div class="title">${data.song.title}</div>
+                            <div class="other">
+                                <div class="time-create">${result}</div>
+                                <div class="topic"># HipHop & Rap</div>
+                            </div>
+                        </div>
+
                         <div class="interact">
                             <div class="view">
                                 <div class="listens">
+                                    <i class="btn btn--small text-light fa-solid fa-play"></i>
                                     ${data.song.listen}
                                 </div>
                                 <div class="like">
@@ -757,33 +775,43 @@ const app = {
                                 <button class="btn btn-secondary">Add to Next Up</button>
                             </div>
                         </div>
-                        <div class="detail-song">
-                            <div class="user-card">
-                                <img src=${dataUser.user.avatar} alt="User Avatar" />
-                                <div class="username">${dataUser.user.userName}</div>
-                                <div class="stats">
-                                    <span>${dataUser.user.follower} Followers</span> |
-                                    <span>${dataUser.user.track} Track</span>
-                                </div>
-                                <button class="follow-btn">+ Follow</button>
-                                <button class="unfollow-btn d-none">x Unfollow</button>
-                            </div>
-                            <div class="description">
-                                <p>${data.song.description}</p>
-                            </div>
+                    </div>
+                </div>
+
+                <div class="row detail-song">
+                    <div class="col-lg-2 user-card">
+                        <img src=${dataUser.user.avatar} alt="User Avatar" />
+                        <div class="username">${dataUser.user.userName}</div>
+                        <div class="stats">
+                            <span>${dataUser.user.follower} Followers</span> |
+                            <span>${dataUser.user.track} Track</span>
                         </div>
+                        <button class="follow-btn">
+                        <i class="fa-light fa-user-plus"></i>
+                        Follow
+                        </button>
+                        <button class="unfollow-btn d-none">
+                        <i class="fa-light fa-user-check"></i> 
+                        Following
+                        </button>
+                    </div>
+                    <div class="col-lg-6 description">
+                        <p>${data.song.description}</p>
                     </div>
 
-                    <div class="col-md-4">
-
-                        <h4>Những bài nhạc bạn có thể biết</h4>
+                    <div class="col-lg-4">
+                        <p class="fs-3">Những bài nhạc bạn có thể biết</p>
                         <div class="related-tracks">
                             <div class="random-song__wrap">
                                 <div class="random-song__info">
                                     <div style="background-image: url('./assets/images/99.jpg')" class="random-song__avt">
                                         <div class="d-flex">
-                                            <i class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"></i>
-                                            <i class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"></i>
+                                            <i
+                                                class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"
+                                            ></i>
+                                            <i
+                                                class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"
+                                            ></i>
                                         </div>
                                     </div>
                                     <span class="random-song__name">Ambum 99%</span>
@@ -797,8 +825,8 @@ const app = {
                             </div>
                         </div>
                     </div>
-            </div>
-        `;
+                </div>
+                `;
 
                 const followUserBtn = songDetailPage.querySelector('.follow-btn');
                 const unfollowUserBtn = songDetailPage.querySelector('.unfollow-btn');
@@ -812,7 +840,7 @@ const app = {
                 }
 
                 followUserBtn.addEventListener('click', function () {
-                    let resultFollow = _this.handleFollow('follow', dataUser.user.id);
+                    let resultFollow = _this.handleFollows('follow', dataUser.user.id);
                     if (resultFollow) {
                         followUserBtn.classList.add('d-none');
                         unfollowUserBtn.classList.remove('d-none');
@@ -823,7 +851,7 @@ const app = {
                     }
                 });
                 unfollowUserBtn.addEventListener('click', function () {
-                    let resultFollow = _this.handleFollow('unfollow', dataUser.user.id);
+                    let resultFollow = _this.handleFollows('unfollow', dataUser.user.id);
                     if (resultFollow) {
                         followUserBtn.classList.remove('d-none');
                         unfollowUserBtn.classList.add('d-none');
@@ -837,73 +865,6 @@ const app = {
             console.error(error.message);
             return null;
         }
-    },
-
-    nextSong: function () {
-        this.currentIndex++;
-        if (this.currentIndex >= this.songs.length) {
-            this.currentIndex = 0;
-        }
-        this.loadCurrentSong();
-    },
-
-    prevSong: function () {
-        this.currentIndex--;
-        if (this.currentIndex < 0) {
-            this.currentIndex = this.songs.length - 1;
-        }
-        this.loadCurrentSong();
-    },
-
-    playRandomSong: function () {
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * this.songs.length);
-        } while (newIndex === this.currentIndex);
-
-        this.currentIndex = newIndex;
-        this.loadCurrentSong();
-    },
-
-    // updateCarouselButton: function (carouselId) {
-    //     const carousel = document.querySelector(`#carouselExample${carouselId}`);
-
-    //     // Kiểm tra nếu carousel không tồn tại
-    //     if (!carousel) {
-    //         console.error(`Carousel with ID ${carouselId} not found`);
-    //         return; // Thoát hàm nếu không tìm thấy carousel
-    //     }
-
-    //     const totalItems = carousel.querySelectorAll('.carousel-item').length;
-    //     const activeIndex = Array.from(carousel.querySelectorAll('.carousel-item')).findIndex((item) =>
-    //         item.classList.contains('active'),
-    //     );
-
-    //     const prevBtn = carousel.querySelector('.prev');
-    //     const nextBtn = carousel.querySelector('.next');
-
-    //     // Ẩn nút prev nếu đang ở phần tử đầu tiên
-    //     prevBtn.style.display = activeIndex === 0 ? 'none' : 'flex';
-
-    //     // Ẩn nút next nếu đang ở phần tử cuối
-    //     nextBtn.style.display = activeIndex === totalItems - 1 ? 'none' : 'flex';
-    // },
-
-    setCookie: function (name, value, days = 7, path = '/') {
-        const expires = new Date();
-        expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000); // set expiration time
-        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=${path}`;
-    },
-
-    getCookie: function (name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
-        return null;
-    },
-
-    deleteCookie: function (name, path = '/') {
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}`;
     },
 
     loadMyUser: async function () {
@@ -1013,6 +974,7 @@ const app = {
             });
         });
 
+        // Xử lý chuyển trang HOME -> DETAIL PAGE
         randomSongName.forEach((song) => {
             song.addEventListener('click', () => {
                 let songNodeDetailChoose = song.closest('.random-song__wrap');
@@ -1165,17 +1127,9 @@ const app = {
         this.playlistTopTrending = await this.getPlaylistTopTrending(); // Lấy playlist top trending
         this.users = await this.getUser(); // Lấy user
 
-        // // Cập nhật cho từng carousel nếu cần
-        // const carousels = document.querySelectorAll('.carouselExample'); // Giả sử bạn có nhiều carousel
-        // carousels.forEach((carousel) => {
-        //     const carouselId = carousel.dataset.id; // Lấy ID từ dữ liệu nếu có
-        //     this.updateCarouselButton(carouselId); // Gọi hàm cập nhật cho từng carousel
-        // });
-
         this.defineProperties(); // Định nghĩa các thuộc tính cho Object
         await this.loadMyUser();
         this.loadCurrentSong(); // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
-        // this.updateCarouselButton(); // Lắng nghe xử lý click vào next prev button carousel
         this.render(); // Render playlist
 
         this.loadIconAfterRender();

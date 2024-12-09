@@ -52,7 +52,8 @@
 .current-song,
 .profile-artist,
 .all-trending,
-.all-user {
+.all-user,
+#home {
     /* max-height: 570px; */
     background-color: var(--color-dark);
     border-radius: 10px;
@@ -675,6 +676,11 @@ input[type='range']::-webkit-slider-thumb {
 
 .profile-artist .name-artist {
     font-size: 7rem;
+}
+
+.detail-song .info-song:hover {
+    background-color: #2a2a2a;
+    cursor: pointer;
 }
 
 .content .info-song img {
