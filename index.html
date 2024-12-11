@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="./assets/css/sidebar.css" />
         <link rel="stylesheet" href="./assets/css/modal.css" />
         <link rel="stylesheet" href="./assets/css/detailSong.css" />
+        <link rel="stylesheet" href="./assets/css/profile.css" />
         <title>Music Zone</title>
     </head>
 
@@ -40,13 +41,15 @@
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                         <span class="tooltip-upload">Tải lên</span>
                     </a>
-                    <div class="user">
+                    <div class="user-account">
                         <img class="avatar-user" alt="Profile picture of a person" src="./assets/images/99.jpg" />
-                        <div class="menu-user">
+                        <div class="menu-user d-none">
                             <ul>
-                                <li><i class="fa-solid fa-user"></i><a href="#" class="user-menu-item">Trang cá nhân</a></li>
+                                <li class="btn-profile">
+                                    <i class="fa-solid fa-user"></i><a href="#" class="user-menu-item">Trang cá nhân</a>
+                                </li>
 
-                                <li>
+                                <li class="btn-logout">
                                     <i class="fa-regular fa-arrow-right-from-bracket"></i>
                                     <a href="#" class="user-menu-item">Đăng xuất</a>
                                 </li>
@@ -206,7 +209,7 @@
             <div class="grid wide">
                 <div class="row">
                     <!-- HOME PAGE -->
-                    <div id="home" class="col-lg-10 scrollable">
+                    <div id="home" class="col-lg-10 page scrollable">
                         <div class="play-list js__container-panes">
                             <h3 class="random-list__heading">Phát bài hát ngẫu nhiên</h3>
                             <div class="row random__list">
@@ -236,7 +239,7 @@
                             </div>
 
                             <div class="other-list__heading d-flex align-items-center justify-content-between">
-                                <h2>Top Trending Music Zone</h2>
+                                <h2>Playlist có thể bạn sẽ thích</h2>
                                 <h4 class="show-all-playlist js__show-all">Tất cả</h4>
                             </div>
                             <div id="carouselExample1" class="carouselExample carousel slide">
@@ -386,7 +389,7 @@
                     <!-- HOME PAGE -->
 
                     <!-- DETAIL SONG PAGE -->
-                    <div id="song-detail" class="col-lg-10 d-none scrollable">
+                    <div id="song-detail" class="col-lg-10 page d-none scrollable">
                         <!-- <div class="player">
                             <div class="thumb">
                                 <div class="random-song__avt" style="background-image: url(./assets/images/anhdaonhon.png)">
@@ -518,28 +521,28 @@
                     <!-- DETAIL SONG PAGE -->
 
                     <!-- DETAIL PLAYLIST PAGE -->
-                    <div id="playlist-detail" class="col-lg-10 d-none scrollable">
+                    <div id="playlist-detail" class="col-lg-10 page d-none scrollable">
                         <div class="player">
                             <div class="thumb">
-                                <div class="random-song__avt" style="background-image: url(./assets/images/anhdaonhon.png)">
-                                    <i
-                                        id="playPause"
-                                        class="btn btn--big btn--theme btn__play fa-solid fa-circle-play hide h-100 align-items-center justify-content-center"
-                                    ></i>
-                                    <i
-                                        id="playPause"
-                                        class="btn btn--big btn--theme btn__pause fa-solid fa-circle-pause hide h-100 align-items-center justify-content-center"
-                                    ></i>
-                                </div>
+                                <div class="random-song__avt" style="background-image: url(./assets/images/anhdaonhon.png)"></div>
                             </div>
 
                             <div class="info">
                                 <div class="detail">
                                     <div class="title">Đánh đổi</div>
+
                                     <div class="other">
                                         <div class="time-create">1 tháng trước</div>
                                         <div class="topic"># HipHop & Rap</div>
                                     </div>
+                                </div>
+
+                                <div class="btn-play-song">
+                                    <i id="playPause" class="btn btn--big btn--theme btn__play fa-solid fa-circle-play h-100"></i>
+                                    <i
+                                        id="playPause"
+                                        class="btn btn--big btn--theme btn__pause fa-solid fa-circle-pause hide h-100 align-items-center justify-content-center"
+                                    ></i>
                                 </div>
 
                                 <div class="interact">
@@ -554,11 +557,19 @@
                                         </div>
                                     </div>
 
-                                    <div class="action-buttons">
-                                        <button class="btn btn-primary">Like</button>
-                                        <button class="btn btn-secondary">Repost</button>
-                                        <button class="btn btn-secondary">Share</button>
-                                        <button class="btn btn-secondary">Add to Next Up</button>
+                                    <div class="interact">
+                                        <div class="btn-share">
+                                            <i class="fa-regular fa-share-from-square fs-5"></i>
+                                            <span>Share</span>
+                                        </div>
+                                        <div class="btn-playlist-next">
+                                            <img src="./assets/images/playlist_next.png" alt="" />
+                                            <span>Add to Next up</span>
+                                        </div>
+                                        <div class="btn-playlist-add">
+                                            <img src="./assets/images/playlist_add.png" alt="" />
+                                            <span>Add to Playlist</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -643,6 +654,103 @@
                         </div>
                     </div>
                     <!-- DETAIL PLAYLIST PAGE -->
+
+                    <!-- PROFILE PAGE -->
+                    <div id="profile" class="col-lg-10 page d-none scrollable">
+                        <div class="profile-detail">
+                            <div class="row">
+                                <div class="info-header">
+                                    <div class="">
+                                        <img src="./assets/images/dalat.jfif" alt="Avatar" class="avatar" />
+                                    </div>
+                                    <div class="ms-5">
+                                        <div class="userName">Nguyeen An</div>
+                                        <div class="company fs-3">SGE Entertaiment</div>
+                                        <div class="address fs-3">Binh Chanh, HCM</div>
+                                        <div class="introduce fs-3">Dua con cua Quang Ngai</div>
+                                    </div>
+                                    <div class="right-side">
+                                        <div class="follower"><span>Follower</span> <span class="num">216</span></div>
+                                        <div class="following"><span>Following</span> <span class="num">45</span></div>
+                                        <div class="track"><span>Track</span> <span class="num">19</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-profile">
+                                <div class="row">
+                                    <ul class="nav-profile">
+                                        <li class="nav-profile-item profile-favourite active">Yêu thích</li>
+                                        <li class="nav-profile-item profile-track">Track</li>
+                                        <li class="nav-profile-item profile-playlist">Playlist</li>
+                                        <li class="nav-profile-item">
+                                            <div class="share">
+                                                <i class="fa-regular fa-share-from-square"></i>
+                                                <span>Share</span>
+                                            </div>
+                                            <div class="edit">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                                <span>Edit</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 main-body">
+                                        <div class="title">Đã yêu thích gần đây</div>
+                                        <ul class="list-song-favorite">
+                                            <li class="song-item">
+                                                <img src="./assets/images/danhdoi.png" alt="image for song" class="image" />
+                                                <div class="info-song">
+                                                    <div class="info-song-wrap">
+                                                        <div class="col1">
+                                                            <i
+                                                                id="playPause"
+                                                                class="btn btn--big btn--theme btn__play fa-solid fa-circle-play h-100 align-items-center justify-content-center"
+                                                            ></i>
+                                                        </div>
+                                                        <div class="col2">
+                                                            <div class="userName">Obito</div>
+                                                            <div class="titleSong">Đánh đổi</div>
+                                                        </div>
+                                                        <div class="col3">
+                                                            <div class="createAt">1 tháng trước</div>
+                                                            <div class="topicSong"># HipHop & Rap</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="interact">
+                                                        <div class="left-side">
+                                                            <div class="btn-like">
+                                                                <i class="fa-solid fa-heart text-danger"></i>
+                                                                <i class="fa-light fa-heart d-none"></i>
+                                                                <span>24</span>
+                                                            </div>
+                                                            <div class="btn-share">
+                                                                <i class="fa-regular fa-share-from-square fs-5"></i>
+                                                                <span>Share</span>
+                                                            </div>
+                                                            <div class="btn-playlist-next">
+                                                                <img src="./assets/images/playlist_next.png" alt="" />
+                                                                <span>Add to Next up</span>
+                                                            </div>
+                                                            <div class="btn-playlist-add">
+                                                                <img src="./assets/images/playlist_add.png" alt="" />
+                                                                <span>Add to Playlist</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="right-side">
+                                                            <div class="listens"><span>2.400</span> lượt nghe</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PROFILE PAGE -->
 
                     <!-- CURRENT SONG -->
                     <div id="song-current" class="col-lg-2">

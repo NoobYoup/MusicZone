@@ -6,13 +6,14 @@ const BASEURL = 'https://server-musiczone.vercel.app';
 const songAPI = `${BASEURL}/api/v1/songs`;
 const playlistTopTrendingAPI = `${BASEURL}/api/v1/playlist/toptrending`;
 const userAPI = `${BASEURL}/api/v1/user/getUsers`;
-const detailUserAPI = `${BASEURL}/api/v1/user/`;
+const detailUserAPI = `${BASEURL}/api/v1/user/detail/`;
 const loginEmailAPI = `${BASEURL}/api/v1/account/login/email`;
 const createEmailAPI = `${BASEURL}/api/v1/account/register/email`;
 const verifyCodeAPI = `${BASEURL}/api/v1/account/register/otp`;
 const getUserByTokenAPI = `${BASEURL}/api/v1/user/token/`;
 const songLikeAPI = `${BASEURL}/api/v1/songs/like`;
 const detailSongAPI = `${BASEURL}/api/v1/songs/detail/`;
+const favoriteSongAPI = `${BASEURL}/api/v1/user/favoriteSong`;
 const followUserAPI = `${BASEURL}/api/v1/user/follow`;
 
 const heading = $('.play-song__name');
@@ -80,7 +81,13 @@ const showAll = $$('.js__show-all');
 
 const homePage = $('#home');
 const songDetailPage = $('#song-detail');
+const profilePage = $('#profile');
 const mainLogo = $('.main-logo img');
+
+const userAccount = $('.user-account');
+const menuUser = $('.menu-user');
+
+const pages = $$('.page');
 
 let myUser = null;
 let iconFavoriteSongs;
@@ -504,84 +511,166 @@ const app = {
             window.location.href = 'https://server-musiczone.vercel.app/auth/google';
         };
 
-        // // Xử lý xem trước hình ảnh upload
-        // uploadImageInput.onchange = function (e) {
-        //     if (e.target.files.length) {
-        //         const image = URL.createObjectURL(e.target.files[0]);
-
-        //         console.log(image);
-
-        //         uploadImagePreview.style.backgroundImage = `url('${image}')`;
-        //     }
-        // };
-
-        // // Xử lý nghe trước audio upload
-        // uploadAudioInput.onchange = function (e) {
-        //     if (e.target.files.length) {
-        //         const audio = URL.createObjectURL(e.target.files[0]);
-
-        //         source.src = audio;
-        //         uploadAudioPreview.load();
-        //     }
-        // };
-
-        // // Xử lý tải lên upload
-        // buttonUploadSong.onclick = async function (e) {
-        //     const form = document.querySelector('.single-add-song');
-        //     const formData = new FormData(form);
-
-        //     let tokenUpload = _this.getCookie('token');
-
-        //     console.log(tokenUpload);
-
-        //     const title = document.getElementById('trackTitle').value.trim();
-        //     const audioFile = document.getElementById('audio').files;
-        //     const imageFile = document.getElementById('image').files;
-
-        //     if (!title) {
-        //         alert('Tên bài hát không được để trống!');
-        //         return;
-        //     }
-        //     if (!audioFile.length > 0) {
-        //         alert('Bạn cần tải lên một file audio!');
-        //         return;
-        //     }
-        //     if (!imageFile.length > 0) {
-        //         alert('Bạn cần tải lên một hình ảnh!');
-        //         return;
-        //     }
-
-        //     console.log(title);
-        //     console.log(audioFile);
-        //     console.log(imageFile);
-
-        //     try {
-        //         const response = await fetch('https://server-musiczone.vercel.app/api/v1/songs/upload', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data',
-        //                 Authorization: `Bearer ${tokenUpload}`,
-        //             },
-        //             body: formData,
-        //         });
-
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-
-        //         const result = await response.json();
-        //         console.log('Success:', result);
-        //         alert('Tải lên thành công!');
-        //     } catch (error) {
-        //         console.error('Error:', error);
-        //         alert('Có lỗi xảy ra, vui lòng thử lại.');
-        //     }
-        // };
-
+        // Xử lý quay lại trang HOME
         mainLogo.onclick = function () {
             homePage.classList.remove('d-none');
             songDetailPage.classList.add('d-none');
         };
+
+        // Xử lý hiện modal user account
+        userAccount.onclick = function () {
+            const btnLogout = $('.btn-logout');
+            const btnProfile = $('.btn-profile');
+
+            menuUser.classList.toggle('d-none');
+
+            btnLogout.onclick = function () {
+                app.handleLogout();
+            };
+
+            btnProfile.onclick = function () {
+                pages.forEach((page) => {
+                    page.classList.add('d-none');
+                });
+
+                profilePage.classList.remove('d-none');
+
+                app.renderProfile();
+            };
+        };
+    },
+
+    handleLogout: function () {
+        this.deleteCookie('token');
+        location.reload(); // Load lại trang web
+    },
+
+    renderProfile: async function () {
+        console.log(myUser);
+        const avatarProfile = $('#profile .avatar');
+        avatarProfile.src = myUser.avatar;
+
+        const userNameProfile = $('#profile .userName');
+        userNameProfile.textContent = myUser.userName;
+
+        const companyProfile = $('#profile .company');
+        companyProfile.textContent = myUser.company;
+
+        const addressProfile = $('#profile .address');
+        addressProfile.textContent = myUser.address;
+
+        const introduceProfile = $('#profile .introduce');
+        introduceProfile.textContent = myUser.introduce;
+
+        const followerProfile = $('#profile .follower .num');
+        followerProfile.textContent = myUser.follower;
+
+        const followingProfile = $('#profile .following .num');
+        followingProfile.textContent = myUser.following;
+
+        const listSongFavoriteProfile = $('.list-song-favorite');
+        try {
+            const response = await fetch(favoriteSongAPI, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${app.getCookie('token')}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.code == 200) {
+                let htmls = 'Danh sách trống';
+                if (data.listSong.length > 0) {
+                    htmls = data.listSong.map((song) => {
+                        return `
+                        <li class="song-item">
+                            <img src=${song.image} alt="image for song" class="image" />
+                            <div class="info-song">
+                                <div class="info-song-wrap">
+                                    <div class="col1">
+                                        <i
+                                            id="play"
+                                            class="btn btn--big btn--theme btn__play fa-solid fa-circle-play h-100 align-items-center justify-content-center"                                          
+                                        ></i>
+                                        <i
+                                            id="pause"
+                                            class="btn btn--big btn--theme btn__pause fa-solid fa-circle-pause d-none h-100 align-items-center justify-content-center"                                          
+                                        ></i>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="userName">${song.userName}</div>
+                                        <div class="titleSong">${song.title}</div>
+                                    </div>
+                                    <div class="col3">
+                                        <div class="createAt">${app.convertDate(song.createdAt)}</div>
+                                        <div class="topicSong">${song.topicTitle}</div>
+                                    </div>
+                                </div>
+                                <div class="interact">
+                                    <div class="left-side">
+                                        <div class="btn-like">
+                                            <i class="fa-solid fa-heart text-danger"></i>
+                                            <i class="fa-light fa-heart d-none"></i>
+                                            <span>${song.like.length}</span>
+                                        </div>
+                                        <div class="btn-share">
+                                            <i class="fa-regular fa-share-from-square fs-5"></i>
+                                            <span>Share</span>
+                                        </div>
+                                        <div class="btn-playlist-next">
+                                            <img src="./assets/images/playlist_next.png" alt="" />
+                                            <span>Add to Next up</span>
+                                        </div>
+                                        <div class="btn-playlist-add">
+                                            <img src="./assets/images/playlist_add.png" alt="" />
+                                            <span>Add to Playlist</span>
+                                        </div>
+                                    </div>
+                                    <div class="right-side">
+                                        <div class="listens"><span>${song.listen}</span> lượt nghe</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <audio src=${song.audio} class="audio"></audio>
+                        </li>
+                        `;
+                    });
+
+                    listSongFavoriteProfile.innerHTML = htmls.join('');
+                }
+
+                const btnPlays = $$('#profile #play');
+                const btnPauses = $$('#profile #pause');
+                btnPlays.forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        let songNode = btn.closest('.song-item');
+
+                        if (songNode) {
+                            const title = songNode.querySelector('.titleSong').textContent;
+                            const userName = songNode.querySelector('.userName').textContent;
+                            const image = songNode.querySelector('.image').src;
+                            const audio = songNode.querySelector('.audio').src;
+
+                            this.playSong(title, userName, image, audio);
+                        }
+
+                        // btn.classList.add('d-none');
+                        // const pauseBtn = btn.parentElement.querySelector('#pause');
+                        // pauseBtn.classList.remove('d-none');
+                    });
+                });
+            }
+        } catch (error) {
+            console.error('Đã xảy ra lỗi:', error);
+            return null; // Trả về null nếu có lỗi
+        }
     },
 
     loadCurrentSong: function () {
@@ -639,6 +728,57 @@ const app = {
 
     deleteCookie: function (name, path = '/') {
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}`;
+    },
+
+    convertDate: function (date) {
+        // Thời gian từ API
+        const apiTime = new Date(date);
+        // Thời gian hiện tại
+        const currentTime = new Date();
+
+        // Tính toán sự khác biệt
+        const timeDifference = currentTime - apiTime;
+
+        // Chuyển đổi sự khác biệt thành các đơn vị thời gian
+        const seconds = Math.floor(timeDifference / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        // Kết quả
+        let result = '';
+        if (days > 30) {
+            result = `${Math.floor(days / 30)} tháng trước`;
+        } else if (days > 0) {
+            result = `${days} ngày trước`;
+        } else if (hours % 24 > 0) {
+            result = `${hours % 24} giờ trước `;
+        } else if (minutes % 60 > 0) {
+            result = `${minutes % 60} phút trước`;
+        }
+
+        return result;
+    },
+
+    playSong: function (title, userName, image, audioInput) {
+        const cdAnimate = cd.animate([{ transform: 'rotate(360deg)' }], {
+            duration: 10000, // 10 giây
+            iterations: Infinity, // vòng lặp vô hạn
+        });
+        // Playbar
+        heading.textContent = title;
+        artist.textContent = userName;
+        cd.style.backgroundImage = `url('${image}')`;
+        audio.src = audioInput;
+
+        playbar.classList.add('playing');
+        audio.play();
+        cdAnimate.play();
+
+        // Sidebar
+        headingCurrentSong.textContent = title;
+        artistCurrentSong.textContent = userName;
+        avatarCurrentSong.style.backgroundImage = `url('${image}')`;
     },
 
     handleFollows: async function (type, idUser) {
@@ -736,14 +876,7 @@ const app = {
                     <div class="player">
                     <div class="thumb">
                         <div class="random-song__avt" style="background-image: url(${data.song.image})" id-song="${data.song._id}">
-                            <i
-                                id="playPause"
-                                class="btn btn--big btn--theme btn__play btn-play-song fa-solid fa-circle-play hide h-100 align-items-center justify-content-center"
-                            ></i>
-                            <i
-                                id="playPause"
-                                class="btn btn--big btn--theme btn__pause fa-solid fa-circle-pause hide h-100 align-items-center justify-content-center"
-                            ></i>
+                            
                         </div>
                     </div>
 
@@ -754,6 +887,14 @@ const app = {
                                 <div class="time-create">${result}</div>
                                 <div class="topic"># HipHop & Rap</div>
                             </div>
+                        </div>
+
+                        <div class="btn-play-song">
+                            <i id="playPause" class="btn btn--big btn--theme btn__play fa-solid fa-circle-play h-100"></i>
+                            <i
+                                id="playPause"
+                                class="btn btn--big btn--theme btn__pause fa-solid fa-circle-pause hide h-100 align-items-center justify-content-center"
+                            ></i>
                         </div>
 
                         <div class="interact">
@@ -799,32 +940,7 @@ const app = {
                         <p>${data.song.description}</p>
                     </div>
 
-                    <div class="col-lg-4">
-                        <p class="fs-3">Những bài nhạc bạn có thể biết</p>
-                        <div class="related-tracks">
-                            <div class="random-song__wrap">
-                                <div class="random-song__info">
-                                    <div style="background-image: url('./assets/images/99.jpg')" class="random-song__avt">
-                                        <div class="d-flex">
-                                            <i
-                                                class="btn btn--medium btn--theme btn__play fa-solid fa-circle-play hide"
-                                            ></i>
-                                            <i
-                                                class="btn btn--medium btn--theme btn__pause fa-solid fa-circle-pause hide"
-                                            ></i>
-                                        </div>
-                                    </div>
-                                    <span class="random-song__name">Ambum 99%</span>
-                                </div>
-
-                                <div class="d-flex ms-auto">
-                                    <i class="btn btn--small text-light btn__play fa-regular fa-ellipsis"></i>
-                                    <i class="btn btn--small text-light fa-light fa-heart"></i>
-                                    <i class="btn btn--small text-danger fa-solid fa-heart d-none"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
                 </div>
                 `;
 
@@ -995,7 +1111,7 @@ const app = {
             let classLikeDNone = 'd-none';
             let classUnlikeDNone = '';
 
-            if (song.like.includes(myUser.id)) {
+            if (song.like.includes(myUser?.id)) {
                 classLikeDNone = '';
                 classUnlikeDNone = 'd-none';
             }

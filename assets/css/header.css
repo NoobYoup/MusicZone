@@ -126,10 +126,10 @@
 .profile .menu-user {
     position: absolute;
     bottom: 0;
-    margin-bottom: -72px;
+    margin-bottom: -58px;
+    margin-left: -20px;
     background-color: var(--color-grey);
     border-radius: 4px;
-    display: none;
 }
 
 .profile .menu-user ul {
