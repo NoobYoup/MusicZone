@@ -219,31 +219,34 @@
             <!-- Forgot Password Modal -->
 
             <!-- New Password Modal -->
-            <form class="new-password-container">
+            <div class="new-password-container">
                 <h1 id="heading">Thay đổi mật khẩu</h1>
 
                 <div class="field mt-5">
                     <i class="fa-light fa-lock"></i>
                     <input
-                        placeholder="Nhập mật khẩu mới"
+                        id="new-password"
+                        placeholder="Mật khẩu mới"
                         class="input-field"
-                        name="password"
-                        type="password"
-                        autocomplete="current-password"
+                        name="new-password"
+                        autocomplete="new-password"
+                        required
                     />
                 </div>
+
                 <div class="field mt-5">
                     <i class="fa-light fa-lock"></i>
                     <input
+                        id="confirm-password"
                         placeholder="Nhập lại mật khẩu mới"
                         class="input-field"
-                        name="password"
-                        type="password"
-                        autocomplete="current-password"
+                        name="confirm-password"
+                        autocomplete="new-password"
+                        required
                     />
                 </div>
-                <button type="button" class="button-new-password mt-5">Thay đổi mật khẩu</button>
-            </form>
+                <button type="submit" class="button-new-password mt-5">Thay đổi mật khẩu</button>
+            </div>
             <!-- New Password Modal -->
 
             <!-- Edit profile Modal -->
@@ -270,7 +273,13 @@
                                 <i class="fa-light fa-image me-3"></i>
                                 <span>Thay đổi hình ảnh</span>
                             </label>
-                            <input type="file" class="upload-image-input d-none" name="image" id="image" accept="image/*" />
+                            <input
+                                type="file"
+                                class="upload-image-input d-none"
+                                name="image"
+                                id="image-profile"
+                                accept="image/*"
+                            />
                         </div>
                     </div>
                     <div class="col-md-8 px-5">
@@ -334,7 +343,7 @@
                                 <i class="fa-light fa-image me-3"></i>
                                 <span>Thay đổi hình ảnh</span>
                             </label>
-                            <input type="file" class="upload-image-input d-none" name="image" id="image" accept="image/*" />
+                            <input type="file" class="upload-image-input d-none" name="image" id="image-song" accept="image/*" />
                         </div>
                     </div>
                     <div class="col-md-8 px-5">
@@ -1048,7 +1057,7 @@
             crossorigin="anonymous"
         ></script>
 
-        <script src="./assets/js/app.js"></script>
+        <!-- <script src="./assets/js/app.js"></script> -->
         <script src="./assets/js/show.js"></script>
         <script src="./assets/js/validator.js"></script>
     </body>
