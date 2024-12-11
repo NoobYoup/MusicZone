@@ -89,6 +89,9 @@ const menuUser = $('.menu-user');
 
 const pages = $$('.page');
 
+const navProfileItem = $$('.nav-profile-item');
+const navContentItem = $$('.content-nav-profile');
+
 let myUser = null;
 let iconFavoriteSongs;
 let randomSongName;
@@ -538,6 +541,18 @@ const app = {
                 app.renderProfile();
             };
         };
+
+        navProfileItem.forEach((item, index) => {
+            const contentNav = navContentItem[index];
+
+            item.onclick = function () {
+                $('.nav-profile-item.active').classList.remove('active');
+                navContentItem.forEach((content) => content.classList.add('d-none'));
+
+                item.classList.add('active');
+                contentNav.classList.remove('d-none');
+            };
+        });
     },
 
     handleLogout: function () {

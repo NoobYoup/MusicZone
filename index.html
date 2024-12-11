@@ -205,6 +205,190 @@
             </form>
             <!-- Verify Modal -->
 
+            <!-- Forgot Password Modal -->
+            <form class="forgot-container">
+                <h1 id="heading">Quên mật khẩu</h1>
+
+                <div class="field mt-5">
+                    <i class="fa-regular fa-at"></i>
+                    <input autocomplete="off" placeholder="Email" name="email" class="input-field" type="text" />
+                </div>
+
+                <button type="button" class="button-forgot-password mt-5">Gửi mã xác minh</button>
+            </form>
+            <!-- Forgot Password Modal -->
+
+            <!-- New Password Modal -->
+            <form class="new-password-container">
+                <h1 id="heading">Thay đổi mật khẩu</h1>
+
+                <div class="field mt-5">
+                    <i class="fa-light fa-lock"></i>
+                    <input
+                        placeholder="Nhập mật khẩu mới"
+                        class="input-field"
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                    />
+                </div>
+                <div class="field mt-5">
+                    <i class="fa-light fa-lock"></i>
+                    <input
+                        placeholder="Nhập lại mật khẩu mới"
+                        class="input-field"
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                    />
+                </div>
+                <button type="button" class="button-new-password mt-5">Thay đổi mật khẩu</button>
+            </form>
+            <!-- New Password Modal -->
+
+            <!-- Edit profile Modal -->
+            <form class="container edit-profile-container">
+                <h1 id="heading">Chỉnh sửa trang cá nhân</h1>
+                <div class="mt-5 row">
+                    <div class="col-md-4">
+                        <div
+                            class="w-100 rounded-circle"
+                            style="
+                                background-image: url(./assets/images/anhkhongxauxa.jpg);
+                                height: 250px;
+                                background-position: center;
+                                background-size: cover;
+                                background-repeat: no-repeat;
+                            "
+                        ></div>
+                        <div class="text-center">
+                            <label
+                                for="image"
+                                style="cursor: pointer; background-color: var(--color-dark-gray)"
+                                class="artwork-placeholder upload-image-preview mt-3 fs-4 rounded-3 p-3"
+                            >
+                                <i class="fa-light fa-image me-3"></i>
+                                <span>Thay đổi hình ảnh</span>
+                            </label>
+                            <input type="file" class="upload-image-input d-none" name="image" id="image" accept="image/*" />
+                        </div>
+                    </div>
+                    <div class="col-md-8 px-5">
+                        <div class="field">
+                            <i class="fa-solid fa-user"></i>
+                            <input
+                                autocomplete="off"
+                                placeholder="Tên người dùng"
+                                name="userName"
+                                class="input-field"
+                                type="text"
+                            />
+                        </div>
+                        <div class="field mt-4">
+                            <i class="fa-light fa-buildings"></i>
+                            <input
+                                autocomplete="off"
+                                placeholder="Company"
+                                name="company"
+                                class="input-field company-input"
+                                type="text"
+                            />
+                        </div>
+                        <div class="field mt-4">
+                            <i class="fa-light fa-location-dot"></i>
+                            <input placeholder="Địa chỉ" class="input-field address-input" name="address" type="text" />
+                        </div>
+                        <div class="field mt-4">
+                            <i class="fa-light fa-subtitles"></i>
+                            <input placeholder="Giới thiệu" class="input-field introduce-input" name="introduce" type="text" />
+                        </div>
+                        <div style="margin-bottom: 4em" class="btn">
+                            <button type="button" class="button-save">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Edit profile Modal -->
+
+            <!-- Edit song Modal -->
+            <form class="container edit-song-container">
+                <h1 id="heading">Chỉnh sửa bài hát</h1>
+                <div class="mt-5 row">
+                    <div class="col-md-4">
+                        <div
+                            class="w-100 rounded-circle"
+                            style="
+                                background-image: url(./assets/images/anhkhongxauxa.jpg);
+                                height: 250px;
+                                background-position: center;
+                                background-size: cover;
+                                background-repeat: no-repeat;
+                            "
+                        ></div>
+                        <div class="text-center">
+                            <label
+                                for="image"
+                                style="cursor: pointer; background-color: var(--color-dark-gray)"
+                                class="artwork-placeholder upload-image-preview mt-3 fs-4 rounded-3 p-3"
+                            >
+                                <i class="fa-light fa-image me-3"></i>
+                                <span>Thay đổi hình ảnh</span>
+                            </label>
+                            <input type="file" class="upload-image-input d-none" name="image" id="image" accept="image/*" />
+                        </div>
+                    </div>
+                    <div class="col-md-8 px-5">
+                        <div class="field">
+                            <i class="fa-solid fa-user"></i>
+                            <input autocomplete="off" placeholder="Tên bài hát" name="userName" class="input-field" type="text" />
+                        </div>
+                        <div class="field mt-4">
+                            <i class="fa-light fa-music"></i>
+                            <input
+                                autocomplete="off"
+                                placeholder="Thể loại"
+                                name="company"
+                                class="input-field company-input"
+                                type="text"
+                            />
+                        </div>
+                        <div class="field mt-4">
+                            <i class="fa-light fa-subtitles"></i>
+                            <input placeholder="Mô tả" class="input-field address-input" name="address" type="text" />
+                        </div>
+                        <div class="mt-4">
+                            <div class="track-privacy-options d-flex gap-3 fs-4">
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="statusSecurity"
+                                        id="public"
+                                        value="public"
+                                        checked
+                                    />
+                                    <label class="form-check-label" for="public">Công khai</label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="statusSecurity"
+                                        id="private"
+                                        value="private"
+                                    />
+                                    <label class="form-check-label" for="private">Riêng tư</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 4em" class="btn">
+                            <button type="button" class="button-save">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Edit profile Modal -->
+
             <!-- PAGE -->
             <div class="grid wide">
                 <div class="row">
@@ -697,54 +881,107 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 main-body">
-                                        <div class="title">Đã yêu thích gần đây</div>
-                                        <ul class="list-song-favorite">
-                                            <li class="song-item">
-                                                <img src="./assets/images/danhdoi.png" alt="image for song" class="image" />
-                                                <div class="info-song">
-                                                    <div class="info-song-wrap">
-                                                        <div class="col1">
-                                                            <i
-                                                                id="playPause"
-                                                                class="btn btn--big btn--theme btn__play fa-solid fa-circle-play h-100 align-items-center justify-content-center"
-                                                            ></i>
+                                        <div class="content-nav-profile favorite-profile">
+                                            <div class="title">Đã yêu thích gần đây</div>
+                                            <ul class="list-song-favorite">
+                                                <li class="song-item">
+                                                    <img src="./assets/images/danhdoi.png" alt="image for song" class="image" />
+                                                    <div class="info-song">
+                                                        <div class="info-song-wrap">
+                                                            <div class="col1">
+                                                                <i
+                                                                    id="playPause"
+                                                                    class="btn btn--big btn--theme btn__play fa-solid fa-circle-play h-100 align-items-center justify-content-center"
+                                                                ></i>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="userName">Obito</div>
+                                                                <div class="titleSong">Đánh đổi</div>
+                                                            </div>
+                                                            <div class="col3">
+                                                                <div class="createAt">1 tháng trước</div>
+                                                                <div class="topicSong"># HipHop & Rap</div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col2">
-                                                            <div class="userName">Obito</div>
-                                                            <div class="titleSong">Đánh đổi</div>
-                                                        </div>
-                                                        <div class="col3">
-                                                            <div class="createAt">1 tháng trước</div>
-                                                            <div class="topicSong"># HipHop & Rap</div>
+                                                        <div class="interact">
+                                                            <div class="left-side">
+                                                                <div class="btn-like">
+                                                                    <i class="fa-solid fa-heart text-danger"></i>
+                                                                    <i class="fa-light fa-heart d-none"></i>
+                                                                    <span>24</span>
+                                                                </div>
+                                                                <div class="btn-share">
+                                                                    <i class="fa-regular fa-share-from-square fs-5"></i>
+                                                                </div>
+                                                                <div class="btn-playlist-next">
+                                                                    <img src="./assets/images/playlist_next.png" alt="" />
+                                                                </div>
+                                                                <div class="btn-playlist-add">
+                                                                    <img src="./assets/images/playlist_add.png" alt="" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="right-side">
+                                                                <div class="listens"><span>2.400</span> lượt nghe</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="interact">
-                                                        <div class="left-side">
-                                                            <div class="btn-like">
-                                                                <i class="fa-solid fa-heart text-danger"></i>
-                                                                <i class="fa-light fa-heart d-none"></i>
-                                                                <span>24</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="content-nav-profile track-profile d-none">
+                                            <div class="title">Nhạc của bạn</div>
+                                            <ul class="list-song-favorite">
+                                                <li class="song-item">
+                                                    <img src="./assets/images/danhdoi.png" alt="image for song" class="image" />
+                                                    <div class="info-song">
+                                                        <div class="info-song-wrap">
+                                                            <div class="col1">
+                                                                <i
+                                                                    id="playPause"
+                                                                    class="btn btn--big btn--theme btn__play fa-solid fa-circle-play h-100 align-items-center justify-content-center"
+                                                                ></i>
                                                             </div>
-                                                            <div class="btn-share">
-                                                                <i class="fa-regular fa-share-from-square fs-5"></i>
-                                                                <span>Share</span>
+                                                            <div class="col2">
+                                                                <div class="userName">Obito</div>
+                                                                <div class="titleSong">Đánh đổi</div>
                                                             </div>
-                                                            <div class="btn-playlist-next">
-                                                                <img src="./assets/images/playlist_next.png" alt="" />
-                                                                <span>Add to Next up</span>
-                                                            </div>
-                                                            <div class="btn-playlist-add">
-                                                                <img src="./assets/images/playlist_add.png" alt="" />
-                                                                <span>Add to Playlist</span>
+                                                            <div class="col3">
+                                                                <div class="createAt">1 tháng trước</div>
+                                                                <div class="topicSong"># HipHop & Rap</div>
+                                                                <div class="security fs-6 mt-2 p-2 rounded-3">
+                                                                    <i class="fa-regular fa-lock"></i>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="right-side">
-                                                            <div class="listens"><span>2.400</span> lượt nghe</div>
+                                                        <div class="interact">
+                                                            <div class="left-side">
+                                                                <div class="btn-like">
+                                                                    <i class="fa-solid fa-heart text-danger"></i>
+                                                                    <i class="fa-light fa-heart d-none"></i>
+                                                                    <span>24</span>
+                                                                </div>
+                                                                <div class="btn-share">
+                                                                    <i class="fa-regular fa-share-from-square fs-5"></i>
+                                                                </div>
+                                                                <div class="btn-playlist-next">
+                                                                    <img src="./assets/images/playlist_next.png" alt="" />
+                                                                </div>
+                                                                <div class="btn-playlist-add">
+                                                                    <img src="./assets/images/playlist_add.png" alt="" />
+                                                                </div>
+                                                                <div class="btn-edit-song">
+                                                                    <i class="fa-regular fa-pen-to-square fs-5"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="right-side">
+                                                                <div class="listens"><span>2.400</span> lượt nghe</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

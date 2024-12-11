@@ -210,7 +210,6 @@ body {
 }
 
 .list-song-favorite .topicSong {
-    margin-top: 10px;
     font-size: 16px;
     text-align: center;
     background-color: #333;
@@ -262,4 +261,8 @@ body {
 
 .list-song-favorite .right-side .listens {
     font-size: 14px;
+}
+
+#profile .security {
+    background-color: #f50;
 }

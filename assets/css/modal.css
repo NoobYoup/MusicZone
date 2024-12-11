@@ -129,7 +129,11 @@ Signup Modal
 */
 .login-container,
 .signup-container,
-.verify-container {
+.verify-container,
+.forgot-container,
+.edit-profile-container,
+.edit-song-container,
+.new-password-container {
     position: fixed;
     left: 50%;
     transform: translateX(-50%) scale(0);
@@ -145,16 +149,34 @@ Signup Modal
     z-index: 5;
 }
 
+.edit-profile-container,
+.edit-song-container {
+    width: 800px;
+}
+
+.new-password-container {
+    /* display: block; */
+}
+
+
 .login-container.show,
 .signup-container.show,
-.verify-container.show {
+.verify-container.show,
+.forgot-container.show,
+.edit-profile-container.show,
+.edit-song-container.show,
+.new-password-container.show {
     transform: translateX(-50%) scale(1);
     opacity: 1;
 }
 
 .login-container #heading,
 .signup-container #heading,
-.verify-container #heading {
+.verify-container #heading,
+.forgot-container #heading,
+.edit-profile-container #heading,
+.edit-song-container #heading,
+.new-password-container #heading {
     text-align: center;
     margin-top: 2em;
     color: #fff;
@@ -162,7 +184,11 @@ Signup Modal
 
 .login-container .field,
 .signup-container .field,
-.verify-container .field {
+.verify-container .field,
+.forgot-container .field,
+.edit-profile-container .field,
+.edit-song-container .field,
+.new-password-container .field {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -177,7 +203,11 @@ Signup Modal
 }
 
 .login-container .input-icon,
-.signup-container .input-icon {
+.signup-container .input-icon,
+.forgot-container .input-icon,
+.edit-profile-container .input-icon,
+.edit-song-container .input-icon,
+.new-password-container .input-icon {
     height: 1.3em;
     width: 1.3em;
     fill: white;
@@ -185,7 +215,11 @@ Signup Modal
 
 .login-container .input-field,
 .signup-container .input-field,
-.verify-container .input-field {
+.verify-container .input-field,
+.forgot-container .input-field,
+.edit-profile-container .input-field,
+.edit-song-container .input-field,
+.new-password-container .input-field {
     font-size: 1.6rem;
     background: none;
     border: none;
@@ -196,7 +230,11 @@ Signup Modal
 
 .login-container .btn,
 .signup-container .btn,
-.verify-container .btn {
+.verify-container .btn,
+.forgot-container .btn,
+.edit-profile-container .btn,
+.edit-song-container .btn,
+.new-password-container .btn {
     padding: 0;
     display: flex;
     justify-content: center;
@@ -205,7 +243,8 @@ Signup Modal
 }
 
 .login-container .button-login,
-.signup-container .button-backto-login {
+.signup-container .button-backto-login,
+.forgot-container .button-forgot-password {
     font-size: 1.6rem;
     width: 100%;
     padding: 1rem;
@@ -223,7 +262,9 @@ Signup Modal
 }
 
 .login-container .button-login:hover,
-.signup-container .button-backto-login:hover {
+.signup-container .button-backto-login:hover,
+.forgot-container .button-forgot-password:hover,
+.new-password-container .button-new-password:hover {
     background-color: black;
     color: white;
 }
@@ -231,7 +272,11 @@ Signup Modal
 .login-container .button-sign-up,
 .signup-container .button-sign-up,
 .signup-container .button-create,
-.verify-container .button-verify {
+.verify-container .button-verify,
+.forgot-container .button-forgot-password,
+.edit-profile-container .button-save,
+.edit-song-container .button-save,
+.new-password-container .button-new-password {
     font-size: 1.6rem;
     width: 100%;
     padding: 1rem;
@@ -251,7 +296,9 @@ Signup Modal
     color: white;
 }
 
-.login-container .button-forgot {
+.login-container .button-forgot,
+.forgot-container .button-forgot-password,
+.new-password-container .button-new-password {
     font-size: 1.6rem;
     margin-bottom: 3em;
     padding: 1rem;
@@ -263,7 +310,8 @@ Signup Modal
     color: white;
 }
 
-.login-container .button-forgot:hover {
+.login-container .button-forgot:hover,
+.edit-profile-container .button-save:hover {
     background-color: red;
     color: white;
 }
